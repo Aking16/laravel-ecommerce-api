@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\V1\GalleryResource;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        //
+        return GalleryResource::collection(Gallery::all());
     }
 
     /**
@@ -29,7 +30,7 @@ class GalleryController extends Controller
      */
     public function show(Gallery $gallery)
     {
-        return $gallery;
+        return new GalleryResource($gallery);
     }
 
     /**

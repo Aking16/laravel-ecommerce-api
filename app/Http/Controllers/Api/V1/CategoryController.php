@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Filters\V1\CategoryFilter;
 use App\Http\Requests\Api\V1\StoreCategoryRequest;
 use App\Http\Requests\Api\V1\UpdateCategoryRequest;
 use App\Http\Resources\V1\CategoryResource;
@@ -11,16 +12,16 @@ use App\Traits\ApiResponses;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 
-class CategoryController extends Controller
+class CategoryController extends ApiController
 {
     use ApiResponses;
 
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(CategoryFilter $filters)
     {
-        return CategoryResource::collection(Category::all());
+        return CategoryResource::collection(Category::filter($filters)->get());
     }
 
     /**
