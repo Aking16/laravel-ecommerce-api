@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Api\V1;
+namespace App\Http\Requests\Api\V1\Gallery;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
-class StoreCategoryRequest extends FormRequest
+class UpdateGalleryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +23,8 @@ class StoreCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'description' => 'nullable|string|min:16',
-            'thumbnail' => 'nullable|exists:galleries,id'
+            'name' => 'sometimes|string',
+            'file' => 'sometimes|string'
         ];
     }
 }
