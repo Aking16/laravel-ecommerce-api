@@ -34,6 +34,7 @@ class CategoryResource extends JsonResource
                     ]
                 ] : null
             ]),
+            'includes' => new GalleryResource($this->whenLoaded('gallery')),
             'links' => [
                 'self' => route('category.show', ($this->id))
             ]
