@@ -9,9 +9,7 @@ use App\Http\Resources\V1\GalleryResource;
 use App\Models\Gallery;
 use App\Traits\ApiResponses;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use PhpParser\Node\Stmt\TryCatch;
 
 class GalleryController extends Controller
 {
