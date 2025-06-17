@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Requests\Api\V1;
+namespace App\Http\Requests\Api\V1\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class UpdateCategoryRequest extends FormRequest
+class UpdateProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return Auth()->user()->is_admin;
+        return Auth::user()->is_admin;
     }
 
     /**
@@ -25,6 +25,10 @@ class UpdateCategoryRequest extends FormRequest
         return [
             'name' => 'sometimes|string',
             'description' => 'sometimes|string|min:16',
+            'meta_title' => 'sometimes|string',
+            'meta_description' => 'sometimes|string',
+            'meta_keywords' => 'sometimes|string',
+            'category' => 'sometimes|exists:categories,id',
             'thumbnail' => 'sometimes|exists:galleries,id'
         ];
     }

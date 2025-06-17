@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Requests\Api\V1;
+namespace App\Http\Requests\Api\V1\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
-class CategoryRequest extends FormRequest
+class UpdateCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth()->user()->is_admin;
     }
 
     /**
@@ -22,7 +23,9 @@ class CategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'sometimes|string',
+            'description' => 'sometimes|string|min:16',
+            'thumbnail' => 'sometimes|exists:galleries,id'
         ];
     }
 }

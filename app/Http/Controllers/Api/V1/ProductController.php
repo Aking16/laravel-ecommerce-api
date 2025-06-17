@@ -1,0 +1,87 @@
+<?php
+
+namespace App\Http\Controllers\Api\V1;
+
+use App\Http\Filters\V1\ProductFilter;
+use App\Http\Requests\Api\V1\Product\StoreProductRequest;
+use App\Http\Requests\Api\V1\Product\UpdateProductRequest;
+use App\Http\Resources\V1\ProductResource;
+use App\Models\Product;
+use App\Traits\ApiResponses;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
+
+class ProductController extends ApiController
+{
+    use ApiResponses;
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(ProductFilter $filters)
+    {
+        return ProductResource::collection(Product::filter($filters)->get());
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreProductRequest $request)
+    {
+        return new ProductResource(Product::create($request->all()));
+    }
+
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Product $product)
+    {
+        return new ProductResource($product);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Product $product)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateProductRequest $request, Product $product)
+    {
+        $product->update($request->validated());
+
+        return new ProductResource($product);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($product_id)
+    {
+        if (!Auth::user()->is_admin) {
+            return $this->error('Only administrators are authorized to perform this action.', 403);
+        }
+
+        try {
+            $product = Product::findOrFail($product_id);
+            $product->delete();
+
+            return $this->ok('Product was deleted successfully');
+        } catch (ModelNotFoundException $th) {
+            return $this->error('Product not found.', 404);
+        }
+    }
+}
