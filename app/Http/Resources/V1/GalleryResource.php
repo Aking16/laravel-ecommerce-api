@@ -4,6 +4,7 @@ namespace App\Http\Resources\V1;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class GalleryResource extends JsonResource
 {
@@ -19,7 +20,7 @@ class GalleryResource extends JsonResource
             'id' => $this->id,
             'attributes' => [
                 'name' => $this->name,
-                'file' => $this->file,
+                'file' => Storage::disk('public')->url($this->file),
                 'createdAt' => $this->created_at,
                 'updatedAt' => $this->updated_at,
             ],

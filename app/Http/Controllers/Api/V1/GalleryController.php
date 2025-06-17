@@ -10,6 +10,7 @@ use App\Models\Gallery;
 use App\Traits\ApiResponses;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class GalleryController extends Controller
 {
@@ -28,7 +29,14 @@ class GalleryController extends Controller
      */
     public function store(StoreGalleryRequest $request)
     {
-        return new GalleryResource(Gallery::create($request->all()));
+        $filePath = $request->file('file')->store('uploads/galleries', 'public');
+
+        $gallery = Gallery::create([
+            'name' => $request->name,
+            'file' => $filePath,
+        ]);
+
+        return new GalleryResource($gallery);
     }
 
     /**
@@ -36,6 +44,7 @@ class GalleryController extends Controller
      */
     public function show(Gallery $gallery)
     {
+        // return Storage::disk('public')->response($gallery->file);
         return new GalleryResource($gallery);
     }
 
@@ -44,7 +53,19 @@ class GalleryController extends Controller
      */
     public function update(UpdateGalleryRequest $request, Gallery $gallery)
     {
-        $gallery->update($request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('file')) {
+            if ($gallery->file && Storage::disk('public')->exists($gallery->file)) {
+                Storage::disk('public')->delete($gallery->file);
+            }
+
+            $filePath = $request->file('file')->store('uploads/galleries', 'public');
+
+            $data['file'] = $filePath;
+        }
+
+        $gallery->update($data);
 
         return new GalleryResource($gallery);
     }
