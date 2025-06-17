@@ -24,7 +24,7 @@ class UpdateGalleryRequest extends FormRequest
     {
         return [
             'name' => 'sometimes|string',
-            'file' => 'sometimes|string'
+            'file' => 'sometimes|file|mimes:jpg,jpeg,png|max:2048', // max 2MB
         ];
     }
 }
