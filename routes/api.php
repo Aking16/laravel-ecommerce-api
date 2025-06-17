@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\ApiAuthController;
 use App\Http\Controllers\Api\V1\CategoryController;
 use App\Http\Controllers\Api\V1\GalleryController;
+use App\Http\Controllers\Api\V1\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,7 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
 
     Route::apiResource('category', CategoryController::class);
     Route::apiResource('gallery', GalleryController::class);
+    Route::apiResource('product', ProductController::class);
 
     Route::get('/user', function (Request $request) {
         return $request->user();

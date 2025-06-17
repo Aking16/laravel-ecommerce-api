@@ -23,18 +23,6 @@ class GalleryResource extends JsonResource
                 'createdAt' => $this->created_at,
                 'updatedAt' => $this->updated_at,
             ],
-            // 'relationships' => array_filter([
-            //     'thumbnail' => $this->thumbnail ? [
-            //         'data' => [
-            //             'type' => 'gallery',
-            //             'id' => $this->thumbnail
-            //         ],
-            //         'links' => [
-            //             'self' => route('gallery.show', $this->thumbnail)
-            //         ]
-            //     ] : null
-            // ]),
-            // 'includes' => $this->gallery,
             'links' => [
                 'self' => route('gallery.show', ($this->id))
             ]

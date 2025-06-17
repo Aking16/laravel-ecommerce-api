@@ -2,11 +2,14 @@
 
 namespace App\Http\Filters\V1;
 
-class CategoryFilter extends QueryFilter
+class ProductFilter extends QueryFilter
 {
   protected $sortable = [
     'name',
     'description',
+    'meta_title',
+    'meta_description',
+    'meta_keywords',
     'created_at',
     'updated_at'
   ];
@@ -26,6 +29,24 @@ class CategoryFilter extends QueryFilter
   {
     $likeStr = str_replace('*', '%', $value);
     return $this->builder->where('description', 'like', $likeStr);
+  }
+
+  public function meta_title($value)
+  {
+    $likeStr = str_replace('*', '%', $value);
+    return $this->builder->where('meta_title', 'like', $likeStr);
+  }
+
+  public function meta_description($value)
+  {
+    $likeStr = str_replace('*', '%', $value);
+    return $this->builder->where('meta_description', 'like', $likeStr);
+  }
+
+  public function meta_keywords($value)
+  {
+    $likeStr = str_replace('*', '%', $value);
+    return $this->builder->where('meta_keywords', 'like', $likeStr);
   }
 
   public function created_at($value)

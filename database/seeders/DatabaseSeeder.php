@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -25,6 +26,12 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        Category::factory(10)->create();
+        if (Category::count() < 10) {
+            Category::factory(10 - Category::count())->create();
+        }
+
+        if (Product::count() < 10) {
+            Product::factory(10 - Product::count())->create();
+        }
     }
 }
