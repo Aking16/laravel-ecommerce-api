@@ -15,7 +15,7 @@ class CategoryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'type' => 'category',
+            'type' => 'categories',
             'id' => $this->id,
             'attributes' => [
                 'name' => $this->name,
@@ -24,13 +24,13 @@ class CategoryResource extends JsonResource
                 'updatedAt' => $this->updated_at,
             ],
             'relationships' => array_filter([
-                'thumbnail' => $this->thumbnail ? [
+                'galleries_id' => $this->galleries_id ? [
                     'data' => [
-                        'type' => 'gallery',
-                        'id' => $this->thumbnail
+                        'type' => 'galleries',
+                        'id' => $this->galleries_id
                     ],
                     'links' => [
-                        'self' => route('gallery.show', $this->thumbnail)
+                        'self' => route('gallery.show', $this->galleries_id)
                     ]
                 ] : null
             ]),

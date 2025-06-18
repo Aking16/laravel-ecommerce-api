@@ -14,44 +14,49 @@ class ProductResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
+        return array_filter([
             'type' => 'product',
             'id' => $this->id,
-            'attributes' => array_merge([
+            'attributes' => [
                 'name' => $this->name,
                 'description' => $this->description,
                 'createdAt' => $this->created_at,
                 'updatedAt' => $this->updated_at,
-            ], $request->boolean('include_meta') ? [
-                    'meta_title' => $this->meta_title,
-                    'meta_description' => $this->meta_description,
-                    'meta_keywords' => $this->meta_keywords,
-                ] : []),
+            ],
+            'meta' => array_filter(
+                $request->boolean('include_meta') ? [
+                    'metaTitle' => $this->meta_title,
+                    'metaDescription' => $this->meta_description,
+                    'metaKeywords' => $this->meta_keywords,
+                ] : []
+            ),
             'relationships' => array_filter([
-                'thumbnail' => $this->thumbnail ? [
+                'galleries' => $this->galleries_id ? [
                     'data' => [
-                        'type' => 'thumbnail',
-                        'id' => $this->thumbnail
+                        'type' => 'galleries',
+                        'id' => $this->galleries_id
                     ],
                     'links' => [
-                        'self' => route('gallery.show', $this->thumbnail)
+                        'self' => route('gallery.show', $this->galleries_id)
                     ]
                 ] : null,
-
-                'category' => $this->category ? [
+                'categories' => $this->categories_id ? [
                     'data' => [
-                        'type' => 'category',
-                        'id' => $this->category
+                        'type' => 'categories',
+                        'id' => $this->categories_id
                     ],
                     'links' => [
-                        'self' => route('category.show', $this->category)
+                        'self' => route('category.show', $this->categories_id)
                     ]
                 ] : null,
             ]),
-            'includes' => new CategoryResource($this->whenLoaded('category')),
+            'includes' => array_filter([
+                'categories' => $this->relationLoaded('categories') ? new CategoryResource($this->categories) : null,
+                'galleries' => $this->relationLoaded('galleries') ? new GalleryResource($this->galleries) : null,
+            ]),
             'links' => [
                 'self' => route('product.show', ($this->id))
             ]
-        ];
+        ]);
     }
 }

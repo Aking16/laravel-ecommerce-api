@@ -5,15 +5,21 @@ namespace App\Http\Filters\V1;
 class CategoryFilter extends QueryFilter
 {
   protected $sortable = [
+    'id',
     'name',
     'description',
-    'created_at',
-    'updated_at'
+    'createdAt' => 'created_at',
+    'updatedAt' => 'updated_at'
   ];
 
   public function include($value)
   {
-    return $this->builder->with($value);
+    $relationships = array_map('trim', explode(',', $value));
+
+    $allowed = ['galleries'];
+    $validRelationships = array_filter($relationships, fn($rel) => in_array($rel, $allowed));
+
+    return $this->builder->with($validRelationships);
   }
 
   public function name($value)
@@ -28,7 +34,7 @@ class CategoryFilter extends QueryFilter
     return $this->builder->where('description', 'like', $likeStr);
   }
 
-  public function created_at($value)
+  public function createdAt($value)
   {
     $dates = explode(',', $value);
 
@@ -39,7 +45,7 @@ class CategoryFilter extends QueryFilter
     return $this->builder->whereDate('created_at', $value);
   }
 
-  public function updated_at($value)
+  public function updatedAt($value)
   {
     $dates = explode(',', $value);
 

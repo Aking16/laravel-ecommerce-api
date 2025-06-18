@@ -24,14 +24,6 @@ class ProductController extends ApiController
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreProductRequest $request)
@@ -43,17 +35,9 @@ class ProductController extends ApiController
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(Product $product, ProductFilter $filters)
     {
-        return new ProductResource($product);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Product $product)
-    {
-        //
+        return new ProductResource($product::filter($filters)->findOrFail($product->id));
     }
 
     /**

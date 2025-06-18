@@ -21,11 +21,11 @@ class ProductFactory extends Factory
         return [
             'name' => $this->faker->words(2, true),
             'description' => $this->faker->paragraph(),
-            'category' => Category::inRandomOrder()->first()?->id ?? Category::factory(),
             'meta_title' => $this->faker->words(2, true),
             'meta_keywords' => $this->faker->words(2, true),
             'meta_description' => $this->faker->paragraph(),
-            'thumbnail' => Gallery::inRandomOrder()->first()?->id ?? Gallery::factory(),
+            'categories_id' => Category::inRandomOrder()->first()?->id ?? Category::factory(),
+            'galleries_id' => Gallery::inRandomOrder()->first()?->id ?? Gallery::factory(),
         ];
     }
 }

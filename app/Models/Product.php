@@ -12,14 +12,14 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'category', 'meta_description', 'meta_keywords', 'meta_title', 'thumbnail'];
+    protected $fillable = ['name', 'description', 'category', 'meta_description', 'meta_keywords', 'meta_title', 'galleries_id'];
 
-    public function thumbnail(): BelongsTo
+    public function galleries(): BelongsTo
     {
         return $this->belongsTo(Gallery::class);
     }
 
-    public function category(): BelongsTo
+    public function categories(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
