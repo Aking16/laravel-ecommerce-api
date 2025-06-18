@@ -14,19 +14,22 @@ class ProductResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
+        return array_filter([
             'type' => 'product',
             'id' => $this->id,
-            'attributes' => array_merge([
+            'attributes' => [
                 'name' => $this->name,
                 'description' => $this->description,
                 'createdAt' => $this->created_at,
                 'updatedAt' => $this->updated_at,
-            ], $request->boolean('include_meta') ? [
+            ],
+            'meta' => array_filter(
+                $request->boolean('include_meta') ? [
                     'metaTitle' => $this->meta_title,
                     'metaDescription' => $this->meta_description,
                     'metaKeywords' => $this->meta_keywords,
-                ] : []),
+                ] : []
+            ),
             'relationships' => array_filter([
                 'galleries' => $this->galleries_id ? [
                     'data' => [
@@ -47,13 +50,13 @@ class ProductResource extends JsonResource
                     ]
                 ] : null,
             ]),
-            'includes' => [
-                'categories' => new CategoryResource($this->whenLoaded('categories')),
-                'galleries' => new GalleryResource($this->whenLoaded('galleries')),
-            ],
+            'includes' => array_filter([
+                'categories' => $this->relationLoaded('categories') ? new CategoryResource($this->categories) : null,
+                'galleries' => $this->relationLoaded('galleries') ? new GalleryResource($this->galleries) : null,
+            ]),
             'links' => [
                 'self' => route('product.show', ($this->id))
             ]
-        ];
+        ]);
     }
 }
