@@ -20,7 +20,7 @@ class CategoryFactory extends Factory
         return [
             'name' => $this->faker->words(2, true),
             'description' => $this->faker->paragraph(),
-            'thumbnail' => Gallery::inRandomOrder()->first()?->id ?? Gallery::factory(),
+            'galleries_id' => Gallery::inRandomOrder()->first()?->id ?? Gallery::factory(),
         ];
     }
 }

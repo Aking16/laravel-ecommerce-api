@@ -29,7 +29,7 @@ class UpdateProductRequest extends FormRequest
             'meta_description' => 'sometimes|string',
             'meta_keywords' => 'sometimes|string',
             'category' => 'sometimes|exists:categories,id',
-            'thumbnail' => 'sometimes|exists:galleries,id'
+            'galleries_id' => 'sometimes|exists:galleries,id'
         ];
     }
 }

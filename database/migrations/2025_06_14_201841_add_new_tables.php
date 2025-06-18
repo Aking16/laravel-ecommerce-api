@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('type_categories', function (Blueprint $table) {
+        Schema::create('variant_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamps();
@@ -19,7 +19,7 @@ return new class extends Migration {
         Schema::create('variants', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('category')->constrained('type_categories')->onDelete('cascade');
+            $table->foreignId('variant_categories_id')->constrained('variant_categories')->onDelete('cascade');
             $table->string('color');
             $table->timestamps();
         });
@@ -35,7 +35,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('description')->nullable();
-            $table->foreignId('thumbnail')->nullable()->constrained('galleries')->onDelete('set null');
+            $table->foreignId('galleries_id')->nullable()->constrained('galleries')->onDelete('set null');
             $table->timestamps();
         });
 
@@ -43,12 +43,11 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
-            $table->foreignId('category')->constrained('categories')->onDelete('cascade');
             $table->string('meta_description')->nullable();
             $table->string('meta_keywords')->nullable();
             $table->string('meta_title')->nullable();
-            $table->foreignId('thumbnail')->nullable()->constrained('galleries')->onDelete('set null');
-            $table->foreignId('galleries')->nullable()->constrained('galleries')->onDelete('set null');
+            $table->foreignId('categories_id')->constrained('categories')->onDelete('cascade');
+            $table->foreignId('galleries_id')->nullable()->constrained('galleries')->onDelete('set null');
             $table->timestamps();
         });
 
@@ -58,8 +57,8 @@ return new class extends Migration {
             $table->integer('stock');
             $table->integer('discount_number')->nullable();
             $table->integer('discount_percentage')->nullable();
-            $table->foreignId('thumbnail')->nullable()->constrained('galleries')->onDelete('set null');
-            $table->foreignId('types')->constrained('variants')->onDelete('cascade');
+            $table->foreignId('galleries_id')->nullable()->constrained('galleries')->onDelete('set null');
+            $table->foreignId('variants_id')->constrained('variants')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -74,8 +73,8 @@ return new class extends Migration {
 
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('items')->constrained('attributes')->onDelete('cascade');
-            $table->foreignId('discount')->nullable()->constrained('discounts')->onDelete('set null');
+            $table->foreignId('attributes_id')->constrained('attributes')->onDelete('cascade');
+            $table->foreignId('discounts_id')->nullable()->constrained('discounts')->onDelete('set null');
             $table->timestamps();
         });
     }

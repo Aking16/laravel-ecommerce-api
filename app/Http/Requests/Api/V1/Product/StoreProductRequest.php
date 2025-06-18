@@ -28,8 +28,8 @@ class StoreProductRequest extends FormRequest
             'meta_title' => 'nullable|string',
             'meta_description' => 'nullable|string',
             'meta_keywords' => 'nullable|string',
-            'category' => 'required|exists:categories,id',
-            'thumbnail' => 'nullable|exists:galleries,id'
+            'categories_id' => 'required|exists:categories,id',
+            'galleries_id' => 'nullable|exists:galleries,id'
         ];
     }
 }

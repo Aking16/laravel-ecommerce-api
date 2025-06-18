@@ -25,7 +25,7 @@ class UpdateCategoryRequest extends FormRequest
         return [
             'name' => 'sometimes|string',
             'description' => 'sometimes|string|min:16',
-            'thumbnail' => 'sometimes|exists:galleries,id'
+            'galleries_id' => 'sometimes|exists:galleries,id'
         ];
     }
 }

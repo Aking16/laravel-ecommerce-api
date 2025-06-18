@@ -24,7 +24,7 @@ class StoreCategoryRequest extends FormRequest
         return [
             'name' => 'required|string',
             'description' => 'nullable|string|min:16',
-            'thumbnail' => 'nullable|exists:galleries,id'
+            'galleries_id' => 'nullable|exists:galleries,id'
         ];
     }
 }

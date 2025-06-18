@@ -5,18 +5,24 @@ namespace App\Http\Filters\V1;
 class ProductFilter extends QueryFilter
 {
   protected $sortable = [
+    'id',
     'name',
     'description',
-    'meta_title',
-    'meta_description',
-    'meta_keywords',
-    'created_at',
-    'updated_at'
+    'metaTitle' => 'meta_title',
+    'metaDescription' => 'meta_description',
+    'metaKeywords' => 'meta_keywords',
+    'createdAt' => 'created_at',
+    'updatedAt' => 'updated_at'
   ];
 
   public function include($value)
   {
-    return $this->builder->with($value);
+    $relationships = array_map('trim', explode(',', $value));
+
+    $allowed = ['galleries', 'categories'];
+    $validRelationships = array_filter($relationships, fn($rel) => in_array($rel, $allowed));
+
+    return $this->builder->with($validRelationships);
   }
 
   public function name($value)
@@ -31,25 +37,25 @@ class ProductFilter extends QueryFilter
     return $this->builder->where('description', 'like', $likeStr);
   }
 
-  public function meta_title($value)
+  public function metaTitle($value)
   {
     $likeStr = str_replace('*', '%', $value);
     return $this->builder->where('meta_title', 'like', $likeStr);
   }
 
-  public function meta_description($value)
+  public function metaDescription($value)
   {
     $likeStr = str_replace('*', '%', $value);
     return $this->builder->where('meta_description', 'like', $likeStr);
   }
 
-  public function meta_keywords($value)
+  public function metaKeywords($value)
   {
     $likeStr = str_replace('*', '%', $value);
     return $this->builder->where('meta_keywords', 'like', $likeStr);
   }
 
-  public function created_at($value)
+  public function createdAt($value)
   {
     $dates = explode(',', $value);
 
@@ -60,7 +66,7 @@ class ProductFilter extends QueryFilter
     return $this->builder->whereDate('created_at', $value);
   }
 
-  public function updated_at($value)
+  public function updatedAt($value)
   {
     $dates = explode(',', $value);
 

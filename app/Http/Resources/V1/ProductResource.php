@@ -23,32 +23,34 @@ class ProductResource extends JsonResource
                 'createdAt' => $this->created_at,
                 'updatedAt' => $this->updated_at,
             ], $request->boolean('include_meta') ? [
-                    'meta_title' => $this->meta_title,
-                    'meta_description' => $this->meta_description,
-                    'meta_keywords' => $this->meta_keywords,
+                    'metaTitle' => $this->meta_title,
+                    'metaDescription' => $this->meta_description,
+                    'metaKeywords' => $this->meta_keywords,
                 ] : []),
             'relationships' => array_filter([
-                'thumbnail' => $this->thumbnail ? [
+                'galleries' => $this->galleries_id ? [
                     'data' => [
-                        'type' => 'thumbnail',
-                        'id' => $this->thumbnail
+                        'type' => 'galleries',
+                        'id' => $this->galleries_id
                     ],
                     'links' => [
-                        'self' => route('gallery.show', $this->thumbnail)
+                        'self' => route('gallery.show', $this->galleries_id)
                     ]
                 ] : null,
-
-                'category' => $this->category ? [
+                'categories' => $this->categories_id ? [
                     'data' => [
-                        'type' => 'category',
-                        'id' => $this->category
+                        'type' => 'categories',
+                        'id' => $this->categories_id
                     ],
                     'links' => [
-                        'self' => route('category.show', $this->category)
+                        'self' => route('category.show', $this->categories_id)
                     ]
                 ] : null,
             ]),
-            'includes' => new CategoryResource($this->whenLoaded('category')),
+            'includes' => [
+                'categories' => new CategoryResource($this->whenLoaded('categories')),
+                'galleries' => new GalleryResource($this->whenLoaded('galleries')),
+            ],
             'links' => [
                 'self' => route('product.show', ($this->id))
             ]
