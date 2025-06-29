@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Filters\V1\VariantCategoriesFilter;
+use App\Http\Resources\V1\VariantCategoriesResource;
 use App\Models\VariantCategories;
-use App\Http\Requests\StoreVariantCategoriesRequest;
-use App\Http\Requests\UpdateVariantCategoriesRequest;
+use App\Http\Requests\Api\V1\VariantCategories\StoreVariantCategoriesRequest;
+use App\Http\Requests\Api\V1\VariantCategories\UpdateVariantCategoriesRequest;
 
 class VariantCategoriesController extends ApiController
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(VariantCategoriesFilter $filters)
     {
-        //
+        return VariantCategoriesResource::collection(VariantCategories::filter($filters)->get());
     }
 
     /**

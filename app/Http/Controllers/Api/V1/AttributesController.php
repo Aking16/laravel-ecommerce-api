@@ -10,6 +10,7 @@ use App\Models\Attributes;
 use App\Traits\ApiResponses;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class AttributesController extends ApiController
 {
@@ -34,19 +35,19 @@ class AttributesController extends ApiController
     /**
      * Display the specified resource.
      */
-    public function show(Attributes $attributes)
+    public function show(Attributes $attribute, AttributesFilter $filters)
     {
-        return new AttributesResource($attributes);
+        return new AttributesResource($attribute::filter($filters)->findOrFail($attribute->id));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAttributesRequest $request, Attributes $attributes)
+    public function update(UpdateAttributesRequest $request, Attributes $attribute)
     {
-        $attributes->update($request->validated());
+        $attribute->update($request->validated());
 
-        return new AttributesResource($attributes);
+        return new AttributesResource($attribute);
     }
 
     /**
