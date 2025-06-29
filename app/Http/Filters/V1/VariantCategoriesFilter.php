@@ -11,16 +11,6 @@ class VariantCategoriesFilter extends QueryFilter
     'updatedAt' => 'updated_at'
   ];
 
-  public function include($value)
-  {
-    $relationships = array_map('trim', explode(',', $value));
-
-    $allowed = ['galleries'];
-    $validRelationships = array_filter($relationships, fn($rel) => in_array($rel, $allowed));
-
-    return $this->builder->with($validRelationships);
-  }
-
   public function name($value)
   {
     $likeStr = str_replace('*', '%', $value);
