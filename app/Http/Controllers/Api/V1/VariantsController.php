@@ -2,26 +2,23 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use App\Http\Filters\V1\VariantsFilter;
+use App\Http\Resources\V1\VariantsResource;
 use App\Models\Variants;
-use App\Http\Requests\StoreVariantsRequest;
-use App\Http\Requests\UpdateVariantsRequest;
+use App\Http\Requests\Api\V1\Variants\StoreVariantsRequest;
+use App\Http\Requests\Api\V1\Variants\UpdateVariantsRequest;
+use App\Traits\ApiResponses;
 
 class VariantsController extends ApiController
 {
+    use ApiResponses;
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(VariantsFilter $filters)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return VariantsResource::collection(Variants::filter($filters)->get());
     }
 
     /**
@@ -35,17 +32,9 @@ class VariantsController extends ApiController
     /**
      * Display the specified resource.
      */
-    public function show(Variants $variants)
+    public function show(Variants $variant, VariantsFilter $filters)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Variants $variants)
-    {
-        //
+        return new VariantsResource($variant::filter($filters)->findOrFail($variant->id));
     }
 
     /**

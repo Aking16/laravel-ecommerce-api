@@ -36,7 +36,7 @@ class VariantsResource extends JsonResource
             ]),
             'includes' => array_filter([
                 'variant_categories' => $this->relationLoaded('variant_categories') ?
-                    new VariantCategoriesResource($this->variant_categories_id) :
+                    new VariantCategoriesResource($this->variant_categories) :
                     null,
             ]),
             'links' => [
