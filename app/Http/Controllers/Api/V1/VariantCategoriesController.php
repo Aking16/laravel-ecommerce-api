@@ -7,9 +7,14 @@ use App\Http\Resources\V1\VariantCategoriesResource;
 use App\Models\VariantCategories;
 use App\Http\Requests\Api\V1\VariantCategories\StoreVariantCategoriesRequest;
 use App\Http\Requests\Api\V1\VariantCategories\UpdateVariantCategoriesRequest;
+use App\Traits\ApiResponses;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
 
 class VariantCategoriesController extends ApiController
 {
+    use ApiResponses;
+
     /**
      * Display a listing of the resource.
      */
@@ -19,50 +24,47 @@ class VariantCategoriesController extends ApiController
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreVariantCategoriesRequest $request)
     {
-        //
+        return new VariantCategoriesResource(VariantCategories::create($request->all()));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(VariantCategories $variantCategories)
+    public function show(VariantCategories $variantCategory)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(VariantCategories $variantCategories)
-    {
-        //
+        return new VariantCategoriesResource($variantCategory);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateVariantCategoriesRequest $request, VariantCategories $variantCategories)
+    public function update(UpdateVariantCategoriesRequest $request, VariantCategories $variantCategory)
     {
-        //
+        $variantCategory->update($request->validated());
+
+        return new VariantCategoriesResource($variantCategory);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(VariantCategories $variantCategories)
+    public function destroy($variantCategories_id)
     {
-        //
+        if (!Auth::user()->is_admin) {
+            return $this->error('Only administrators are authorized to perform this action.', 403);
+        }
+
+        try {
+            $product = VariantCategories::findOrFail($variantCategories_id);
+            $product->delete();
+
+            return $this->ok('Product was deleted successfully');
+        } catch (ModelNotFoundException $th) {
+            return $this->error('Product not found.', 404);
+        }
     }
 }

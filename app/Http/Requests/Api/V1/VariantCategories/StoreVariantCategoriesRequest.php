@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\V1\VariantCategories;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreVariantCategoriesRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreVariantCategoriesRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::user()->is_admin;
     }
 
     /**
@@ -22,7 +23,7 @@ class StoreVariantCategoriesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
         ];
     }
 }
