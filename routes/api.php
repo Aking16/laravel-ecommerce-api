@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\ProductController;
 use App\Http\Controllers\Api\V1\VariantCategoriesController;
 use App\Http\Controllers\Api\V1\VariantsController;
 use App\Http\Controllers\Api\V1\CartsController;
+use App\Http\Controllers\Api\V1\PaymentsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,7 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
     Route::apiResource('variants', VariantsController::class);
     Route::apiResource('variant-categories', VariantCategoriesController::class);
     Route::apiResource('carts', CartsController::class);
+    Route::apiResource('payments', PaymentsController::class);
 
     Route::get('/user', function (Request $request) {
         return $request->user();
