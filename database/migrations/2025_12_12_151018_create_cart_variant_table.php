@@ -26,7 +26,7 @@ return new class extends Migration
                 ->constrained('discounts')
                 ->nullOnDelete();
 
-            $table->unique(['carts_id', 'variant_id']);
+            $table->unique(['carts_id', 'attributes_id']);
             $table->timestamps();
         });
     }

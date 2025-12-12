@@ -7,9 +7,14 @@ use App\Models\Carts;
 use App\Http\Requests\Api\V1\Carts\StoreCartsRequest;
 use App\Http\Requests\Api\V1\Carts\UpdateCartsRequest;
 use App\Http\Resources\V1\CartsResource;
+use App\Traits\ApiResponses;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 
 class CartsController extends ApiController
 {
+    use ApiResponses;
+
     /**
      * Display a listing of the resource.
      */
@@ -27,10 +32,9 @@ class CartsController extends ApiController
 
         $cart->attributes()->attach($request->validated('attributes_id'), [
             'discounts_id' => $request->validated('discounts_id')
-
         ]);
 
-        return $cart;
+        return new CartsResource($cart);
     }
 
     /**
@@ -44,16 +48,31 @@ class CartsController extends ApiController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCartsRequest $request, Carts $carts)
+    public function update(UpdateCartsRequest $request, Carts $cart)
     {
-        //
+        try {
+            $cart->attributes()->attach($request->validated('attributes_id'), [
+                'discounts_id' => $request->validated('discounts_id')
+            ]);
+        } catch (QueryException  $e) {
+            return $this->error('Attribute already exists on this cart.', 409);
+        }
+
+        return new CartsResource($cart);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Carts $carts)
+    public function destroy($cart_id)
     {
-        //
+        try {
+            $cart = Carts::findOrFail($cart_id);
+            $cart->delete();
+
+            return $this->ok('Cart was deleted successfully');
+        } catch (ModelNotFoundException $th) {
+            return $this->error('Cart not found.', 404);
+        }
     }
 }
