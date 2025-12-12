@@ -10,6 +10,8 @@ use App\Http\Resources\V1\CartsResource;
 use App\Traits\ApiResponses;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class CartsController extends ApiController
 {
@@ -28,7 +30,9 @@ class CartsController extends ApiController
      */
     public function store(StoreCartsRequest $request)
     {
-        $cart = Carts::create([]);
+        $cart = Carts::create([
+            'user_id' => Auth::id(),
+        ]);
 
         $cart->attributes()->attach($request->validated('attributes_id'), [
             'discounts_id' => $request->validated('discounts_id')
@@ -42,6 +46,8 @@ class CartsController extends ApiController
      */
     public function show(Carts $cart, CartsFilter $filters)
     {
+        Gate::authorize('view', $cart);
+
         return new CartsResource($cart::filter($filters)->findOrFail($cart->id));
     }
 
@@ -50,6 +56,8 @@ class CartsController extends ApiController
      */
     public function update(UpdateCartsRequest $request, Carts $cart)
     {
+        Gate::authorize('update', $cart);
+
         try {
             $cart->attributes()->attach($request->validated('attributes_id'), [
                 'discounts_id' => $request->validated('discounts_id')
@@ -68,6 +76,9 @@ class CartsController extends ApiController
     {
         try {
             $cart = Carts::findOrFail($cart_id);
+
+            Gate::authorize('delete', $cart);
+
             $cart->delete();
 
             return $this->ok('Cart was deleted successfully');
