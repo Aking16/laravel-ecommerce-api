@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\V1\Gallery;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreGalleryRequest extends FormRequest
 {
@@ -11,7 +12,7 @@ class StoreGalleryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth()->user()->is_admin;
+        return Auth::user()->is_admin;
     }
 
     /**

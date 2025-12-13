@@ -73,8 +73,6 @@ return new class extends Migration {
 
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('attributes_id')->constrained('attributes')->onDelete('cascade');
-            $table->foreignId('discounts_id')->nullable()->constrained('discounts')->onDelete('set null');
             $table->timestamps();
         });
     }
@@ -91,6 +89,6 @@ return new class extends Migration {
         Schema::dropIfExists('categories');
         Schema::dropIfExists('galleries');
         Schema::dropIfExists('variants');
-        Schema::dropIfExists('type_categories');
+        Schema::dropIfExists('variant_categories');
     }
 };

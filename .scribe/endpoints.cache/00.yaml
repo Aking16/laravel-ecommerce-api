@@ -71,7 +71,7 @@ endpoints:
   -
     httpMethods:
       - POST
-    uri: api/logout
+    uri: api/v1/logout
     metadata:
       groupName: Authentication
       groupDescription: ''
@@ -103,7 +103,7 @@ endpoints:
     auth:
       - headers
       - Authorization
-      - 'Bearer 4|ree12pFO9tF3uoY8UgtD8Sw0IzM3QZuLhCMayaw00b1410bd'
+      - 'Bearer 6g43cv8PD1aE5beadkZfhV6'
     controller: null
     method: null
     route: null
