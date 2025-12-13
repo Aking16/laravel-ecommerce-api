@@ -153,9 +153,18 @@ API will be available at:
 http://127.0.0.1:8000/api
 ```
 
-### Admin panel
+---
+
+## 📝 Admin panel
+Create an admin user
+
+```bash
+php artisan filament:make-user
 ```
-http://127.0.01:8000/admin
+
+Then login with the created account
+```
+http://127.0.01:8000/admin/login
 ```
 
 ---
