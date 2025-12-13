@@ -66,18 +66,23 @@ git clone https://github.com/Aking16/laravel-ecommerce-api.git
 cd laravel-ecommerce-api
 ```
 
-2. Install dependencies
+### 2. Install dependencies
 
+```bash
 composer install
+```
 
-3. Copy environment file
+### 3. Copy environment file
 
+```bash
 cp .env.example .env
+```
 
-4. Generate application key
+### 4. Generate application key
 
+```bash
 php artisan key:generate
-
+```
 
 ---
 
