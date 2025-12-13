@@ -132,6 +132,11 @@ postman_collection.json
 3. Select `postman_collection.json`
 4. Configure your base URL (e.g. `http://127.0.0.1:8000/api`)
 
+### Or visit
+```
+http://127.0.0.1:8000/docs
+```
+
 ---
 
 ## ▶️ Usage
@@ -146,6 +151,11 @@ API will be available at:
 
 ```
 http://127.0.0.1:8000/api
+```
+
+### Admin panel
+```
+http://127.0.01:8000/admin
 ```
 
 ---
