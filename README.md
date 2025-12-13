@@ -64,7 +64,7 @@ It exposes RESTful endpoints to manage users, products, categories, and orders, 
 ```bash
 git clone https://github.com/Aking16/laravel-ecommerce-api.git
 cd laravel-ecommerce-api
-
+```
 
 ### 2. Install dependencies
 
