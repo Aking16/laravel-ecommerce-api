@@ -1,8 +1,8 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 
-
 ---
+
 
 # Laravel E-Commerce API
 
@@ -64,7 +64,7 @@ It exposes RESTful endpoints to manage users, products, categories, and orders, 
 ```bash
 git clone https://github.com/Aking16/laravel-ecommerce-api.git
 cd laravel-ecommerce-api
-```
+
 
 ### 2. Install dependencies
 
@@ -86,72 +86,73 @@ php artisan key:generate
 
 ---
 
-⚙️ Environment Configuration
+## ⚙️ Environment Configuration
 
-Edit the .env file and configure your database:
+Edit the `.env` file and configure your database:
 
+```env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=laravel_ecommerce
 DB_USERNAME=root
 DB_PASSWORD=
-
+```
 
 ---
 
-🗄 Database
+## 🗄 Database
 
 Run migrations to create database tables:
 
+```bash
 php artisan migrate
+```
 
 A visual database schema is provided in the project:
 
+```
 db-schema.png
-
+```
 
 ---
 
-📬 API Documentation
+## 📬 API Documentation
 
 A Postman collection is included for testing all available endpoints:
 
+```
 postman_collection.json
+```
 
-Import Steps:
+### Import Steps:
 
 1. Open Postman
-
-
-2. Click Import
-
-
-3. Select postman_collection.json
-
-
-4. Configure your base URL (e.g. http://127.0.0.1:8000/api)
-
-
-
+2. Click **Import**
+3. Select `postman_collection.json`
+4. Configure your base URL (e.g. `http://127.0.0.1:8000/api`)
 
 ---
 
-▶️ Usage
+## ▶️ Usage
 
 Start the Laravel development server:
 
+```bash
 php artisan serve
+```
 
 API will be available at:
 
+```
 http://127.0.0.1:8000/api
-
+```
 
 ---
 
-📁 Project Structure
+## 📁 Project Structure
 
+```
 laravel-ecommerce-api/
 ├── app/              # Application logic
 ├── database/         # Migrations & seeders
@@ -160,51 +161,46 @@ laravel-ecommerce-api/
 ├── postman_collection.json
 ├── db-schema.png
 └── README.md
-
+```
 
 ---
 
-🧪 Testing
+## 🧪 Testing
 
 If tests are included, you can run them using:
 
+```bash
 php artisan test
-
-
----
-
-🛠 Troubleshooting
-
-Ensure Composer is installed and up to date
-
-Verify database credentials in .env
-
-Run php artisan config:clear if environment changes aren’t reflected
-
-Make sure required PHP extensions are enabled
-
-
+```
 
 ---
 
-👥 Contributors
+## 🛠 Troubleshooting
 
-Aking16 – Project Author
+* Ensure **Composer** is installed and up to date
+* Verify database credentials in `.env`
+* Run `php artisan config:clear` if environment changes aren’t reflected
+* Make sure required PHP extensions are enabled
 
+---
+
+## 👥 Contributors
+
+* **Aking16** – Project Author
 
 Contributions are welcome. Feel free to fork the repository and submit a pull request.
 
+---
+
+## 📄 License
+
+This project is open-source and available under the **MIT License**.
 
 ---
 
-📄 License
-
-This project is open-source and available under the MIT License.
-
-
----
-
-⭐ Support
+## ⭐ Support
 
 If you find this project useful, please consider giving it a ⭐ on GitHub.
+
+```
 
