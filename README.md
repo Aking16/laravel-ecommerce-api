@@ -21,6 +21,7 @@ This project serves as a backend API that can be consumed by web or mobile appli
 - [Database](#database)
 - [API Documentation](#api-documentation)
 - [Usage](#usage)
+- [Admin Panel](#admin-panel)
 - [Project Structure](#project-structure)
 - [Testing](#testing)
 - [Troubleshooting](#troubleshooting)
