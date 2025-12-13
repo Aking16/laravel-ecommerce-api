@@ -1,0 +1,1900 @@
+{
+	"info": {
+		"_postman_id": "62e1fded-77b1-4ea4-8cc5-92693f5d202c",
+		"name": "Laravel E-commerce API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31012900"
+	},
+	"item": [
+		{
+			"name": "Stateless Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Aking",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "test2@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "12345678",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/register",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "test@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/logout",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stateful Auth (won't work in postman)",
+			"item": [
+				{
+					"name": "Get CSRF Cookie",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/sanctum/csrf-cookie",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"sanctum",
+								"csrf-cookie"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Aking",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "test2@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "12345678",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/register",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "test@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/login",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"john@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/forgot-password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"forgot-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"john@example.com\",\n  \"token\": \"reset-token\",\n  \"password\": \"new-password\",\n  \"password_confirmation\": \"new-password\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/reset-password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"reset-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/verify-email/:id/:hash",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"verify-email",
+								":id",
+								":hash"
+							],
+							"variable": [
+								{
+									"key": "id"
+								},
+								{
+									"key": "hash"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resend Verification Email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/email/verification-notification",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"email",
+								"verification-notification"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/logout",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/user",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Category",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/category?include=galleries",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"category"
+							],
+							"query": [
+								{
+									"key": "include",
+									"value": "galleries"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter Category",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/category?filter[name]=autem*&filter[description]=Vol*&include=gallery",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"category"
+							],
+							"query": [
+								{
+									"key": "filter[name]",
+									"value": "autem*"
+								},
+								{
+									"key": "filter[description]",
+									"value": "Vol*"
+								},
+								{
+									"key": "include",
+									"value": "gallery"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Category",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/category/8",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"category",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Test Category",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Test description",
+									"description": "Nullable",
+									"type": "text"
+								},
+								{
+									"key": "thumbnail",
+									"value": "1",
+									"description": "Nullable",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/category",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Updated\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/category/14",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"category",
+								"14"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/category/11",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"category",
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Gallery",
+			"item": [
+				{
+					"name": "Gallery",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/gallery",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"gallery"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Gallery",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/gallery/5",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"gallery",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Gallery",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Test Gallery",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Aking/Desktop/360_F_279132718_FwcEPzRC62Eay4creqr8eG0Q4Bkc9PuF.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/gallery",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"gallery"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Gallery",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Aking/Desktop/800ml44f1jky.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/gallery/5?_method=PUT",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"gallery",
+								"5"
+							],
+							"query": [
+								{
+									"key": "_method",
+									"value": "PUT"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Gallery",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/gallery/2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"gallery",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/product",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"product"
+							],
+							"query": [
+								{
+									"key": "include_meta",
+									"value": "true",
+									"disabled": true
+								},
+								{
+									"key": "include",
+									"value": "categories,galleries",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter Products",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/product?include_meta=true&sort=-id",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"product"
+							],
+							"query": [
+								{
+									"key": "filter[name]",
+									"value": "Inv*",
+									"disabled": true
+								},
+								{
+									"key": "filter[createdAt]",
+									"value": "2022-1-1,2028-1-1",
+									"disabled": true
+								},
+								{
+									"key": "filter[metaDescription]",
+									"value": "Dolores*",
+									"disabled": true
+								},
+								{
+									"key": "include_meta",
+									"value": "true"
+								},
+								{
+									"key": "sort",
+									"value": "-id"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Product",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/product/2?include_meta=1&include=galleries",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"product",
+								"2"
+							],
+							"query": [
+								{
+									"key": "include_meta",
+									"value": "1"
+								},
+								{
+									"key": "include",
+									"value": "galleries"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Test Gallery",
+									"type": "text"
+								},
+								{
+									"key": "categories_id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/product",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Updated\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/product/16",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"product",
+								"16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/product/16",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"product",
+								"16"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Attributes",
+			"item": [
+				{
+					"name": "Attributes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/attributes",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"attributes"
+							],
+							"query": [
+								{
+									"key": "include",
+									"value": "galleries,variants",
+									"disabled": true
+								},
+								{
+									"key": "filter[discountPercentage]",
+									"value": "e22",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "-id",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve Attributes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/attributes/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"attributes",
+								"1"
+							],
+							"query": [
+								{
+									"key": "include",
+									"value": "variants",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Attributes",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "price",
+									"value": "123232",
+									"type": "text"
+								},
+								{
+									"key": "stock",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "galleries_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "variants_id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/attributes",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"attributes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Attributes",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"stock\": \"1212121\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/attributes/11",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"attributes",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Attributes",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/attributes/11",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"attributes",
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Variant Categories",
+			"item": [
+				{
+					"name": "Variant Categories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/variant-categories",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"variant-categories"
+							],
+							"query": [
+								{
+									"key": "filter[name]",
+									"value": "odit*",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "-id",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/variant-categories/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"variant-categories",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Test new",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/variant-categories",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"variant-categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Updated\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/variant-categories/12",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"variant-categories",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/variant-categories/11",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"variant-categories",
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Variants",
+			"item": [
+				{
+					"name": "Variant Categories",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/variants",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"variants"
+							],
+							"query": [
+								{
+									"key": "filter[name]",
+									"value": "odit*",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "-id",
+									"disabled": true
+								},
+								{
+									"key": "include",
+									"value": "variant_categories",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/variants/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"variants",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Test new",
+									"type": "text"
+								},
+								{
+									"key": "color",
+									"value": "Red",
+									"type": "text"
+								},
+								{
+									"key": "variant_categories_id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/variants",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"variants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Updated\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/variants/11",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"variants",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/variants/11",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"variants",
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Carts",
+			"item": [
+				{
+					"name": "Carts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/carts?include=attributes",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"carts"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "-id",
+									"disabled": true
+								},
+								{
+									"key": "include",
+									"value": "attributes"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/carts/5",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"carts",
+								"5"
+							],
+							"query": [
+								{
+									"key": "include",
+									"value": "attributes",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "attributes_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "discounts_id",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/carts",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"carts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "attributes_id",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/carts/1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"carts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/carts/6",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"carts",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Get Image",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/storage/uploads/galleries/4CY07CFyYLUydsMC6rV4gdE97UwP6yDVkAQnyiXX.jpg",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"storage",
+						"uploads",
+						"galleries",
+						"4CY07CFyYLUydsMC6rV4gdE97UwP6yDVkAQnyiXX.jpg"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "6|9eLz1hHCcH0SysYkS8PmZEDj5JY1lfWRe1qy7QZK636dd441",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://127.0.0.1:8000"
+		}
+	]
+}

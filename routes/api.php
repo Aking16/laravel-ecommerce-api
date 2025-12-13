@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [ApiAuthController::class, 'login']);
 Route::post('/register', [ApiAuthController::class, 'register'])->name('api.register');
 
-Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
+Route::prefix('v1')->middleware(['auth:sanctum', 'throttle:api'])->group(function () {
     Route::post('logout', [ApiAuthController::class, 'logout']);
 
     Route::apiResource('category', CategoryController::class);
