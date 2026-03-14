@@ -15,12 +15,20 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [ApiAuthController::class, 'login']);
 Route::post('/register', [ApiAuthController::class, 'register'])->name('api.register');
 
+Route::prefix('v1')->group(function () {
+    Route::apiResource('product', ProductController::class)->only(['index', 'show']);
+
+    Route::apiResource('category', CategoryController::class)->only(['index', 'show']);
+
+    Route::apiResource('gallery', GalleryController::class)->only(['index', 'show']);
+});
+
 Route::prefix('v1')->middleware(['auth:sanctum', 'throttle:api'])->group(function () {
     Route::post('logout', [ApiAuthController::class, 'logout']);
 
-    Route::apiResource('category', CategoryController::class);
-    Route::apiResource('gallery', GalleryController::class);
-    Route::apiResource('product', ProductController::class);
+    Route::apiResource('category', CategoryController::class)->except(['index', 'show']);
+    Route::apiResource('gallery', GalleryController::class)->except(['index', 'show']);
+    Route::apiResource('product', ProductController::class)->except(['index', 'show']);
     Route::apiResource('attributes', AttributesController::class);
     Route::apiResource('variants', VariantsController::class);
     Route::apiResource('variant-categories', VariantCategoriesController::class);

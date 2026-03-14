@@ -16,9 +16,15 @@ class GalleryFactory extends Factory
      */
     public function definition(): array
     {
+        $file = $this->faker->randomElement([
+            'placeholders/man-shirt.jpg',
+            'placeholders/t-shirt-1.jpg',
+            'placeholders/t-shirt-2.jpg',
+        ]);
+
         return [
-            'name' => $this->faker->words(2, true), // e.g. "Mountain View"
-            'file' => $this->faker->imageUrl(640, 480, 'fashion'), // You can change the category here
+            'name' => $this->faker->words(2, true),
+            'file' => $file,
         ];
     }
 }

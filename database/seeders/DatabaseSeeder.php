@@ -6,7 +6,7 @@ use App\Models\Attributes;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Gallery;
 use App\Models\VariantCategories;
 use App\Models\Variants;
 use Illuminate\Database\Seeder;
@@ -28,6 +28,10 @@ class DatabaseSeeder extends Seeder
                 'is_admin' => true
             ]
         );
+
+        if (Gallery::count() <= 3) {
+            Gallery::factory(3)->create();
+        }
 
         if (Category::count() < 10) {
             Category::factory(10)->create();
