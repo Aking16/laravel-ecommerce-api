@@ -2,13 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\Attributes;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
-use App\Models\Gallery;
-use App\Models\VariantCategories;
-use App\Models\Variants;
+use App\Models\ProductVariant;
+use App\Models\ProductAttribute;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -29,28 +27,18 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        if (Gallery::count() <= 3) {
-            Gallery::factory(3)->create();
-        }
-
-        if (Category::count() < 10) {
-            Category::factory(10)->create();
-        }
-
-        if (Product::count() < 10) {
-            Product::factory(10)->create();
-        }
-
-        if (VariantCategories::count() < 10) {
-            VariantCategories::factory(10)->create();
-        }
-
-        if (Variants::count() < 10) {
-            Variants::factory(10)->create();
-        }
-
-        if (Attributes::count() < 10) {
-            Attributes::factory(10)->create();
-        }
+        Category::factory(5)
+            ->has(
+                Product::factory(3)
+                    ->has(
+                        ProductVariant::factory(2)
+                            ->has(
+                                ProductAttribute::factory(3),
+                                'attributes'
+                            ),
+                        "variants"
+                    )
+            )
+            ->create();
     }
 }

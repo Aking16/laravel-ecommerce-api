@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Filters\V1\CartsFilter;
-use App\Models\Carts;
-use App\Http\Requests\Api\V1\Carts\StoreCartsRequest;
-use App\Http\Requests\Api\V1\Carts\UpdateCartsRequest;
-use App\Http\Resources\V1\CartsResource;
+use App\Models\Cart;
+use App\Http\Requests\Api\V1\Carts\StoreCartRequest;
+use App\Http\Requests\Api\V1\Carts\UpdateCartRequest;
+use App\Http\Resources\V1\CartResource;
 use App\Traits\ApiResponses;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
-class CartsController extends ApiController
+class CartController extends ApiController
 {
     use ApiResponses;
 
@@ -22,39 +22,40 @@ class CartsController extends ApiController
      */
     public function index(CartsFilter $filters)
     {
-        return CartsResource::collection(Carts::filter($filters)->get());
+        return CartResource::collection(Cart::filter($filters)->get());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCartsRequest $request)
+    public function store(StoreCartRequest $request)
     {
-        $cart = Carts::create([
+        $cart = Cart::create([
             'user_id' => Auth::id(),
         ]);
 
-        $cart->attributes()->attach($request->validated('attributes_id'), [
-            'discounts_id' => $request->validated('discounts_id')
+        $cart->items()->create([
+            'attribute_id' => $request->validated('attribute_id'),
+            'quantity' => $request->validated('quantity') ?? 1,
         ]);
 
-        return new CartsResource($cart);
+        return new CartResource($cart);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Carts $cart, CartsFilter $filters)
+    public function show(Cart $cart, CartsFilter $filters)
     {
         Gate::authorize('view', $cart);
 
-        return new CartsResource($cart::filter($filters)->findOrFail($cart->id));
+        return new CartResource($cart::filter($filters)->findOrFail($cart->id));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCartsRequest $request, Carts $cart)
+    public function update(UpdateCartRequest $request, Cart $cart)
     {
         Gate::authorize('update', $cart);
 
@@ -66,7 +67,7 @@ class CartsController extends ApiController
             return $this->error('Attribute already exists on this cart.', 409);
         }
 
-        return new CartsResource($cart);
+        return new CartResource($cart);
     }
 
     /**
@@ -75,7 +76,7 @@ class CartsController extends ApiController
     public function destroy($cart_id)
     {
         try {
-            $cart = Carts::findOrFail($cart_id);
+            $cart = Cart::findOrFail($cart_id);
 
             Gate::authorize('delete', $cart);
 

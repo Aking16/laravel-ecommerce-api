@@ -4,23 +4,25 @@ namespace App\Models;
 
 use App\Http\Filters\V1\QueryFilter;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Variants extends Model
+class Cart extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'color',
-        'variant_categories_id',
+        'user_id'
     ];
 
-    public function variant_categories(): BelongsTo
+    public function items()
     {
-        return $this->belongsTo(VariantCategories::class, 'variant_categories_id');
+        return $this->hasMany(CartItem::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function scopeFilter(Builder $builder, QueryFilter $filters)

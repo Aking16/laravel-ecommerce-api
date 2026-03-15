@@ -14,7 +14,11 @@ class CartsFilter extends QueryFilter
   {
     $relationships = array_map('trim', explode(',', $value));
 
-    $allowed = ['attributes'];
+    $allowed = [
+      'items',
+      'items.attribute'
+    ];
+
     $validRelationships = array_filter($relationships, fn($rel) => in_array($rel, $allowed));
 
     return $this->builder->with($validRelationships);

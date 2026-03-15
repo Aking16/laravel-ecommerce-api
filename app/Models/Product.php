@@ -2,30 +2,38 @@
 
 namespace App\Models;
 
-use App\Http\Filters\V1\QueryFilter;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'category', 'meta_description', 'meta_keywords', 'meta_title', 'categories_id', 'galleries_id'];
+    protected $fillable = [
+        'category_id',
+        'name',
+        'slug',
+        'description'
+    ];
 
-    public function galleries(): BelongsTo
-    {
-        return $this->belongsTo(Gallery::class);
-    }
-
-    public function categories(): BelongsTo
+    public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function scopeFilter(Builder $builder, QueryFilter $filters)
+    public function variants()
     {
-        return $filters->apply($builder);
+        return $this->hasMany(ProductVariant::class);
+    }
+
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
+
+    public function mainImage()
+    {
+        return $this->morphOne(Image::class, 'imageable')
+            ->where('is_main', true);
     }
 }

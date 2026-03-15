@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\Carts;
+use App\Models\Cart;
 
 class DeleteExpiredCarts extends Command
 {
@@ -26,7 +26,7 @@ class DeleteExpiredCarts extends Command
      */
     public function handle()
     {
-        $count = Carts::where('updated_at', '<', now()->subHour())->delete();
+        $count = Cart::where('updated_at', '<', now()->subHour())->delete();
 
         $this->info("Deleted {$count} expired carts.");
 

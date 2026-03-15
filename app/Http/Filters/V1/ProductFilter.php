@@ -37,6 +37,12 @@ class ProductFilter extends QueryFilter
     return $this->builder->where('description', 'like', $likeStr);
   }
 
+  public function category($value)
+  {
+    $likeStr = str_replace('*', '%', $value);
+    return $this->builder->where('categories_id', 'like', $likeStr);
+  }
+
   public function metaTitle($value)
   {
     $likeStr = str_replace('*', '%', $value);

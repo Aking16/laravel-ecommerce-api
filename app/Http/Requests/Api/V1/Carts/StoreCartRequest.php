@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api\V1\Carts;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCartsRequest extends FormRequest
+class StoreCartRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,8 @@ class UpdateCartsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'attributes_id' => 'sometimes|integer|exists:attributes,id',
-            'discounts_id' => 'sometimes|integer|exists:discounts,id'
+            'attribute_id' => 'required|exists:product_attributes,id',
+            'quantity' => 'nullable|integer|min:1'
         ];
     }
 }

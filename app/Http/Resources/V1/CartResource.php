@@ -5,7 +5,7 @@ namespace App\Http\Resources\V1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CartsResource extends JsonResource
+class CartResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,37 +14,32 @@ class CartsResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // return parent::toArray($request);
-
         return array_filter([
             'type' => 'carts',
             'id' => $this->id,
-            'carts' => [
+            'cart' => [
                 'createdAt' => $this->created_at,
                 'updatedAt' => $this->updated_at,
             ],
             'relationships' => array_filter([
-                'attributes' => $this->attributes ? [
-                    'data' => $this->attributes->map(function ($attribute) {
+                'items' => $this->items ? [
+                    'data' => $this->items->map(function ($item) {
                         return [
-                            'type' => 'attributes',
-                            'id'   => $attribute->id,
+                            'type' => 'cart_items',
+                            'id' => $item->id,
                         ];
                     }),
-                    'links' => [
-                        'related' => route('attributes.index'),
-                    ]
                 ] : null,
             ]),
             'includes' => array_filter([
-                'attributes' =>
-                $this->relationLoaded('attributes')
-                    &&  request()->query('include')
-                    ? AttributesResource::collection($this->attributes)
+                'items' =>
+                $this->relationLoaded('items')
+                    && request()->query('include')
+                    ? CartItemsResource::collection($this->items)
                     : null,
             ]),
             'links' => [
-                'self' => route('carts.show', $this->id)
+                'self' => route('cart.show', $this->id)
             ]
         ]);
     }
