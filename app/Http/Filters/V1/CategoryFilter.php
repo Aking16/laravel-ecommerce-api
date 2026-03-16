@@ -2,6 +2,8 @@
 
 namespace App\Http\Filters\V1;
 
+use App\Models\Category;
+
 class CategoryFilter extends QueryFilter
 {
   protected $sortable = [
@@ -12,15 +14,7 @@ class CategoryFilter extends QueryFilter
     'updatedAt' => 'updated_at'
   ];
 
-  public function include($value)
-  {
-    $relationships = array_map('trim', explode(',', $value));
-
-    $allowed = ['galleries'];
-    $validRelationships = array_filter($relationships, fn($rel) => in_array($rel, $allowed));
-
-    return $this->builder->with($validRelationships);
-  }
+  protected $allowedIncludes = Category::ALLOWED_INCLUDES;
 
   public function name($value)
   {

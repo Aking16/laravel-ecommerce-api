@@ -36,6 +36,22 @@ class ImageController extends ApiController
                 ->update(['is_main' => false]);
         }
 
+        // Category should only have one image
+        // Remove the previous image if exists
+        if ($data['imageable_type'] === 'App\Models\Category') {
+            $oldImage = Image::where('imageable_id', $data['imageable_id'])
+                ->where('imageable_type', $data['imageable_type'])
+                ->first();
+
+            if ($oldImage) {
+                if ($oldImage->path && Storage::disk('public')->exists($oldImage->path)) {
+                    Storage::disk('public')->delete($oldImage->path);
+                }
+
+                $oldImage->delete();
+            }
+        }
+
         $image = Image::create([
             'path' => $filePath,
             'is_main' => $data['is_main'] ?? false,
