@@ -25,11 +25,7 @@ class StoreProductRequest extends FormRequest
         return [
             'name' => 'required|string',
             'description' => 'nullable|string|min:16',
-            'meta_title' => 'nullable|string',
-            'meta_description' => 'nullable|string',
-            'meta_keywords' => 'nullable|string',
-            'categories_id' => 'required|exists:categories,id',
-            'galleries_id' => 'nullable|exists:galleries,id'
+            'category_id' => 'required|exists:category,id',
         ];
     }
 }

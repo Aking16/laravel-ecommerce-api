@@ -31,28 +31,31 @@ class ProductResource extends JsonResource
                 ] : []
             ),
             'relationships' => array_filter([
-                'galleries' => $this->galleries_id ? [
+                'category' => [
                     'data' => [
-                        'type' => 'galleries',
-                        'id' => $this->galleries_id
+                        'type' => 'category',
+                        'id' => $this->category->id
                     ],
                     'links' => [
-                        'self' => route('gallery.show', $this->galleries_id)
+                        'self' => route('category.show', $this->category->id)
                     ]
-                ] : null,
-                'categories' => $this->categories_id ? [
-                    'data' => [
-                        'type' => 'categories',
-                        'id' => $this->categories_id
-                    ],
-                    'links' => [
-                        'self' => route('category.show', $this->categories_id)
+                ],
+                'images' => $this->when(
+                    $this->relationLoaded('images'),
+                    fn() => [
+                        'data' => $this->images->map(fn($image) => [
+                            'type' => 'image',
+                            'id' => $image->id,
+                        ]),
                     ]
-                ] : null,
+                ),
+
             ]),
             'includes' => array_filter([
-                'categories' => $this->relationLoaded('categories') ? new CategoryResource($this->categories) : null,
-                'galleries' => $this->relationLoaded('galleries') ? new GalleryResource($this->galleries) : null,
+                'category' => $this->relationLoaded('category') ? new CategoryResource($this->category) : null,
+                // 'images' => $this->relationLoaded('images')
+                //     ? ImageResource::collection($this->images)
+                //     : null,
             ]),
             'links' => [
                 'self' => route('product.show', ($this->id))

@@ -19,7 +19,7 @@ class ProductFilter extends QueryFilter
   {
     $relationships = array_map('trim', explode(',', $value));
 
-    $allowed = ['galleries', 'categories'];
+    $allowed = ['galleries', 'category'];
     $validRelationships = array_filter($relationships, fn($rel) => in_array($rel, $allowed));
 
     return $this->builder->with($validRelationships);

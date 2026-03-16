@@ -25,11 +25,7 @@ class UpdateProductRequest extends FormRequest
         return [
             'name' => 'sometimes|string',
             'description' => 'sometimes|string|min:16',
-            'meta_title' => 'sometimes|string',
-            'meta_description' => 'sometimes|string',
-            'meta_keywords' => 'sometimes|string',
-            'category' => 'sometimes|exists:categories,id',
-            'galleries_id' => 'sometimes|exists:galleries,id'
+            'category_id' => 'sometimes|exists:category,id',
         ];
     }
 }
