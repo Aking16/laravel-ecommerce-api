@@ -2,6 +2,8 @@
 
 namespace App\Http\Filters\V1;
 
+use App\Models\Product;
+
 class ProductFilter extends QueryFilter
 {
   protected $sortable = [
@@ -15,15 +17,7 @@ class ProductFilter extends QueryFilter
     'updatedAt' => 'updated_at'
   ];
 
-  public function include($value)
-  {
-    $relationships = array_map('trim', explode(',', $value));
-
-    $allowed = ['galleries', 'category'];
-    $validRelationships = array_filter($relationships, fn($rel) => in_array($rel, $allowed));
-
-    return $this->builder->with($validRelationships);
-  }
+  protected $allowedIncludes = Product::ALLOWED_INCLUDES;
 
   public function name($value)
   {
@@ -39,8 +33,7 @@ class ProductFilter extends QueryFilter
 
   public function category($value)
   {
-    $likeStr = str_replace('*', '%', $value);
-    return $this->builder->where('categories_id', 'like', $likeStr);
+    return $this->builder->where('category_id', $value);
   }
 
   public function metaTitle($value)

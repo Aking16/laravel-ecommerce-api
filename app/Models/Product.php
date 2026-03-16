@@ -11,6 +11,12 @@ class Product extends Model
 {
     use HasFactory;
 
+    public const ALLOWED_INCLUDES = [
+        'images',
+        'category',
+        'mainImage'
+    ];
+
     protected $fillable = [
         'category_id',
         'name',

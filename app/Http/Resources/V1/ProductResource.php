@@ -4,6 +4,8 @@ namespace App\Http\Resources\V1;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Support\IncludeParser;
+use App\Models\Product;
 
 class ProductResource extends JsonResource
 {
@@ -14,6 +16,8 @@ class ProductResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $includes = new IncludeParser($request, Product::ALLOWED_INCLUDES);
+
         return array_filter([
             'type' => 'product',
             'id' => $this->id,
@@ -34,28 +38,29 @@ class ProductResource extends JsonResource
                 'category' => [
                     'data' => [
                         'type' => 'category',
-                        'id' => $this->category->id
+                        'id' => $this->category_id
                     ],
                     'links' => [
-                        'self' => route('category.show', $this->category->id)
+                        'self' => route('category.show', $this->category_id)
                     ]
                 ],
-                'images' => $this->when(
-                    $this->relationLoaded('images'),
-                    fn() => [
-                        'data' => $this->images->map(fn($image) => [
-                            'type' => 'image',
-                            'id' => $image->id,
-                        ]),
-                    ]
-                ),
-
+                'images' => $this->images->isNotEmpty() ? [
+                    'data' => $this->images->map(fn($image) => [
+                        'type' => 'image',
+                        'id' => $image->id,
+                    ])
+                ] : null,
             ]),
             'includes' => array_filter([
-                'category' => $this->relationLoaded('category') ? new CategoryResource($this->category) : null,
-                // 'images' => $this->relationLoaded('images')
-                //     ? ImageResource::collection($this->images)
-                //     : null,
+                'category' => $includes->has('category') && $this->relationLoaded('category')
+                    ? new CategoryResource($this->category)
+                    : null,
+                'mainImage' => $includes->has('mainImage') && $this->relationLoaded('mainImage')
+                    ? new ImageResource($this->mainImage)
+                    : null,
+                'images' => $includes->has('images') && $this->relationLoaded('images')
+                    ? ImageResource::collection($this->images)
+                    : null,
             ]),
             'links' => [
                 'self' => route('product.show', ($this->id))

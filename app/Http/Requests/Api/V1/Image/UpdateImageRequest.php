@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Api\V1\Product;
+namespace App\Http\Requests\Api\V1\Image;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-class UpdateProductRequest extends FormRequest
+class UpdateImageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return Auth::user()->is_admin;
+        return true;
     }
 
     /**
@@ -23,10 +22,10 @@ class UpdateProductRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'sometimes|string',
-            'slug' => 'sometimes|string|max:255|alpha_dash|unique:products,slug',
-            'description' => 'nullable|string|min:16',
-            'category_id' => 'sometimes|exists:categories,id',
+            'file' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'is_main' => 'sometimes|boolean',
+            'imageable_id' => 'sometimes|integer',
+            'imageable_type' => 'sometimes|string'
         ];
     }
 }

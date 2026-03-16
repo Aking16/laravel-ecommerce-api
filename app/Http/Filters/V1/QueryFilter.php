@@ -9,7 +9,9 @@ abstract class QueryFilter
 {
   protected $builder;
   protected $request;
+
   protected $sortable = [];
+  protected $allowedIncludes = [];
 
   public function __construct(Request $request)
   {
@@ -63,6 +65,22 @@ abstract class QueryFilter
       }
 
       $this->builder->orderBy($columnName, $direction);
+    }
+  }
+
+  protected function include($value)
+  {
+    $includes = explode(',', $value);
+
+    $relationships = collect($includes)
+      ->map(fn($item) => trim($item))
+      ->filter()
+      ->intersect($this->allowedIncludes)
+      ->values()
+      ->all();
+
+    if (!empty($relationships)) {
+      $this->builder->with($relationships);
     }
   }
 }
