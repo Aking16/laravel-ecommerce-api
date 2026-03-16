@@ -30,6 +30,12 @@ class ImageController extends ApiController
 
         $filePath = $request->file('file')->store('uploads/galleries', 'public');
 
+        if (!empty($data['is_main'])) {
+            Image::where('imageable_id', $data['imageable_id'])
+                ->where('imageable_type', $data['imageable_type'])
+                ->update(['is_main' => false]);
+        }
+
         $image = Image::create([
             'path' => $filePath,
             'is_main' => $data['is_main'] ?? false,
@@ -56,13 +62,19 @@ class ImageController extends ApiController
         $data = $request->validated();
 
         if ($request->hasFile('file')) {
-            if ($image->file && Storage::disk('public')->exists($image->file)) {
-                Storage::disk('public')->delete($image->file);
+            if ($image->path && Storage::disk('public')->exists($image->path)) {
+                Storage::disk('public')->delete($image->path);
             }
 
             $filePath = $request->file('file')->store('uploads/galleries', 'public');
 
             $data['path'] = $filePath;
+        }
+
+        if (!empty($data['is_main'])) {
+            Image::where('imageable_id', $image->imageable_id)
+                ->where('imageable_type', $image->imageable_type)
+                ->update(['is_main' => false]);
         }
 
         $image->update($data);

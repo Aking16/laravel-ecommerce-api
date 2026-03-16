@@ -22,7 +22,7 @@ class UpdateImageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'file' => 'sometimes|image|mimes:jpg,jpeg,png,webp|max:2048',
             'is_main' => 'sometimes|boolean',
             'imageable_id' => 'sometimes|integer',
             'imageable_type' => 'sometimes|string'
