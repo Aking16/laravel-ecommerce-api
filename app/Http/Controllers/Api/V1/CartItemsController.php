@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
 use App\Traits\ApiResponses;
 use App\Models\CartItem;
 use App\Http\Filters\V1\CartItemsFilter;
@@ -12,7 +11,7 @@ use App\Http\Resources\V1\CartItemsResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Gate;
 
-class CartItemsController extends Controller
+class CartItemsController extends ApiController
 {
     use ApiResponses;
 
