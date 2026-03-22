@@ -24,8 +24,7 @@ class StoreVariantsRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'variant_categories_id' => 'required|exists:variant_categories,id',
-            'color' => 'required|string|max:255'
+            'product_id' => 'required|exists:products,id',
         ];
     }
 }

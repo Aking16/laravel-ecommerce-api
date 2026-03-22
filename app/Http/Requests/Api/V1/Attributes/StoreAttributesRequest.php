@@ -25,10 +25,8 @@ class StoreAttributesRequest extends FormRequest
         return [
             'price' => 'required|numeric',
             'stock' => 'required|integer',
-            'discount_number' => 'nullable|integer',
-            'discount_percentage' => 'nullable|numeric',
-            'galleries_id' => 'required|exists:galleries,id',
-            'variants_id' => 'required|exists:variants,id',
+            'sku' => 'nullable|integer',
+            'variant_id' => 'required|exists:product_variants,id',
         ];
     }
 }

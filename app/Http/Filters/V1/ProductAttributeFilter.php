@@ -2,27 +2,20 @@
 
 namespace App\Http\Filters\V1;
 
-class AttributesFilter extends QueryFilter
+use App\Models\ProductAttribute;
+
+class ProductAttributeFilter extends QueryFilter
 {
   protected $sortable = [
     'id',
     'price',
     'stock',
-    'discountNumber' => 'discount_number',
-    'discountPercentage' => 'discount_percentage',
+    'sku',
     'createdAt' => 'created_at',
     'updatedAt' => 'updated_at'
   ];
 
-  public function include($value)
-  {
-    $relationships = array_map('trim', explode(',', $value));
-
-    $allowed = ['galleries', 'variants'];
-    $validRelationships = array_filter($relationships, fn($rel) => in_array($rel, $allowed));
-
-    return $this->builder->with($validRelationships);
-  }
+  protected $allowedIncludes = ProductAttribute::ALLOWED_INCLUDES;
 
   public function price($value)
   {

@@ -24,8 +24,7 @@ class UpdateVariantsRequest extends FormRequest
     {
         return [
             'name' => 'sometimes|string|max:255',
-            'variant_categories_id' => 'sometimes|exists:variant_categories,id',
-            'color' => 'sometimes|string|max:255'
+            'product_id' => 'sometimes|exists:product,id',
         ];
     }
 }

@@ -2,12 +2,18 @@
 
 namespace App\Models;
 
+use App\Http\Filters\V1\QueryFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ProductAttribute extends Model
 {
     use HasFactory;
+
+    public const ALLOWED_INCLUDES = [
+        'variant',
+    ];
 
     protected $fillable = [
         'variant_id',
@@ -30,5 +36,10 @@ class ProductAttribute extends Model
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class, 'attribute_id');
+    }
+
+    public function scopeFilter(Builder $builder, QueryFilter $filters)
+    {
+        return $filters->apply($builder);
     }
 }

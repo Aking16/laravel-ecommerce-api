@@ -2,33 +2,21 @@
 
 namespace App\Http\Filters\V1;
 
-class VariantsFilter extends QueryFilter
+use App\Models\ProductVariant;
+
+class ProductVariantFilter extends QueryFilter
 {
   protected $sortable = [
     'id',
+    'productId' => 'product_id',
     'name',
-    'color',
     'createdAt' => 'created_at',
     'updatedAt' => 'updated_at'
   ];
 
-  public function include($value)
-  {
-    $relationships = array_map('trim', explode(',', $value));
-
-    $allowed = ['variant_categories'];
-    $validRelationships = array_filter($relationships, fn($rel) => in_array($rel, $allowed));
-
-    return $this->builder->with($validRelationships);
-  }
+  protected $allowedIncludes = ProductVariant::ALLOWED_INCLUDES;
 
   public function name($value)
-  {
-    $likeStr = str_replace('*', '%', $value);
-    return $this->builder->where('name', 'like', $likeStr);
-  }
-
-  public function color($value)
   {
     $likeStr = str_replace('*', '%', $value);
     return $this->builder->where('name', 'like', $likeStr);

@@ -25,10 +25,7 @@ class UpdateAttributesRequest extends FormRequest
         return [
             'price' => 'sometimes|numeric',
             'stock' => 'sometimes|integer',
-            'discount_number' => 'sometimes|integer',
-            'discount_percentage' => 'sometimes|numeric',
-            'galleries_id' => 'sometimes|exists:galleries,id',
-            'variants_id' => 'sometimes|exists:variants,id',
+            'variant_id' => 'sometimes|exists:product_variants,id',
         ];
     }
 }

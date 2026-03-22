@@ -2,26 +2,25 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Filters\V1\AttributesFilter;
+use App\Http\Filters\V1\ProductAttributeFilter;
 use App\Http\Requests\Api\V1\Attributes\StoreAttributesRequest;
 use App\Http\Requests\Api\V1\Attributes\UpdateAttributesRequest;
 use App\Http\Resources\V1\AttributesResource;
-use App\Models\Attributes;
+use App\Models\ProductAttribute;
 use App\Traits\ApiResponses;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
-class AttributesController extends ApiController
+class ProductAttributeController extends ApiController
 {
     use ApiResponses;
 
     /**
      * Display a listing of the resource.
      */
-    public function index(AttributesFilter $filters)
+    public function index(ProductAttributeFilter $filters)
     {
-        return AttributesResource::collection(Attributes::filter($filters)->get());
+        return AttributesResource::collection(ProductAttribute::filter($filters)->get());
     }
 
     /**
@@ -29,25 +28,25 @@ class AttributesController extends ApiController
      */
     public function store(StoreAttributesRequest $request)
     {
-        return new AttributesResource(Attributes::create($request->all()));
+        return new AttributesResource(ProductAttribute::create($request->all()));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Attributes $attribute, AttributesFilter $filters)
+    public function show(ProductAttribute $productAttribute, ProductAttributeFilter $filters)
     {
-        return new AttributesResource($attribute::filter($filters)->findOrFail($attribute->id));
+        return new AttributesResource($productAttribute::filter($filters)->findOrFail($productAttribute->id));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAttributesRequest $request, Attributes $attribute)
+    public function update(UpdateAttributesRequest $request, ProductAttribute $productAttribute)
     {
-        $attribute->update($request->validated());
+        $productAttribute->update($request->validated());
 
-        return new AttributesResource($attribute);
+        return new AttributesResource($productAttribute);
     }
 
     /**
@@ -60,12 +59,12 @@ class AttributesController extends ApiController
         }
 
         try {
-            $attributes = Attributes::findOrFail($attributes_id);
+            $attributes = ProductAttribute::findOrFail($attributes_id);
             $attributes->delete();
 
-            return $this->ok('Attributes was deleted successfully');
+            return $this->ok('Product attributes was deleted successfully');
         } catch (ModelNotFoundException $exception) {
-            return $this->error('Attributes not found.', 404);
+            return $this->error('Product attributes not found.', 404);
         }
     }
 }
