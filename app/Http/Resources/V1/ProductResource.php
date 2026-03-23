@@ -24,6 +24,7 @@ class ProductResource extends JsonResource
             'attributes' => [
                 'name' => $this->name,
                 'description' => $this->description,
+                'highestPrice' => $this->attributes_max_price,
                 'createdAt' => $this->created_at,
                 'updatedAt' => $this->updated_at,
             ],

@@ -34,6 +34,18 @@ class Product extends Model
         return $this->hasMany(ProductVariant::class);
     }
 
+    public function attributes()
+    {
+        return $this->hasManyThrough(
+            ProductAttribute::class,
+            ProductVariant::class,
+            'product_id',  // Foreign key on variants
+            'variant_id', // Foreign key on attributes
+            'id',          // Local key on product
+            'id'     // Local key on variants
+        );
+    }
+
     public function images()
     {
         return $this->morphMany(Image::class, 'imageable');
