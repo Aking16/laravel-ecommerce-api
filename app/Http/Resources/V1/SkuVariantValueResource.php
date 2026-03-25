@@ -22,7 +22,7 @@ class SkuVariantValueResource extends JsonResource
             'type' => 'sku-variant-value',
             'id' => $this->id,
             'attributes' => [
-                'sku_id' => $this->sku,
+                'sku_id' => $this->sku_id,
                 'variant_value_id' => $this->variant_value_id,
                 'createdAt' => $this->created_at,
                 'updatedAt' => $this->updated_at,
