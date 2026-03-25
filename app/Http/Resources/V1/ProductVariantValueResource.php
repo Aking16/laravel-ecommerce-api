@@ -5,9 +5,9 @@ namespace App\Http\Resources\V1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Support\IncludeParser;
-use App\Models\ProductAttribute;
+use App\Models\ProductVariantValue;
 
-class AttributesResource extends JsonResource
+class ProductVariantValueResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,22 +16,20 @@ class AttributesResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $includes = new IncludeParser($request, ProductAttribute::ALLOWED_INCLUDES);
+        $includes = new IncludeParser($request, ProductVariantValue::ALLOWED_INCLUDES);
 
         return array_filter([
-            'type' => 'product-attributes',
+            'type' => 'product-variant-values',
             'id' => $this->id,
             'attributes' => [
-                'price' => $this->price,
-                'stock' => $this->stock,
-                'sku' => $this->sku,
+                'value' => $this->value,
                 'createdAt' => $this->created_at,
                 'updatedAt' => $this->updated_at,
             ],
             'relationships' => array_filter([
                 'variant' => [
                     'data' => [
-                        'type' => 'product-variants',
+                        'type' => 'variant',
                         'id' => $this->variant_id
                     ],
                     'links' => [
@@ -39,13 +37,13 @@ class AttributesResource extends JsonResource
                     ]
                 ],
             ]),
-            'includes' => array_filter([
-                'variant' => $includes->has('variant') && $this->relationLoaded('variant') ?
-                    new ProductVariantResource($this->variant) :
-                    null,
-            ]),
+            // 'includes' => array_filter([
+            //     'product' => $includes->has('product') && $this->relationLoaded('product') ?
+            //         new ProductResource($this->product) :
+            //         null,
+            // ]),
             'links' => [
-                'self' => route('product-attributes.show', $this->id)
+                'self' => route('product-variant-values.show', $this->id)
             ]
         ]);
     }

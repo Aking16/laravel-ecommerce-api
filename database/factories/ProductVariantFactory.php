@@ -18,10 +18,8 @@ class ProductVariantFactory extends Factory
     {
         return [
             'name' => $this->faker->randomElement([
-                'Default',
                 'Color',
                 'Size',
-                'Material'
             ]),
         ];
     }

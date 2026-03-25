@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Api\V1\VariantCategories;
+namespace App\Http\Requests\Api\V1\VariantsValues;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-class UpdateVariantCategoriesRequest extends FormRequest
+class StoreProductVariantValueRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return Auth::user()->is_admin;
+        return false;
     }
 
     /**
@@ -23,7 +22,7 @@ class UpdateVariantCategoriesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'sometimes|string|max:255',
+            //
         ];
     }
 }

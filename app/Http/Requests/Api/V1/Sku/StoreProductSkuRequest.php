@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Api\V1\Attributes;
+namespace App\Http\Requests\Api\V1\Sku;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-class UpdateAttributesRequest extends FormRequest
+class StoreProductSkuRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return Auth::user()->is_admin;
+        return false;
     }
 
     /**
@@ -23,9 +22,7 @@ class UpdateAttributesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'price' => 'sometimes|numeric',
-            'stock' => 'sometimes|integer',
-            'variant_id' => 'sometimes|exists:product_variants,id',
+            //
         ];
     }
 }

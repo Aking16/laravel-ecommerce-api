@@ -5,9 +5,9 @@ namespace App\Http\Resources\V1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Support\IncludeParser;
-use App\Models\ProductVariant;
+use App\Models\ProductSku;
 
-class ProductVariantResource extends JsonResource
+class ProductSkuResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,13 +16,15 @@ class ProductVariantResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $includes = new IncludeParser($request, ProductVariant::ALLOWED_INCLUDES);
+        $includes = new IncludeParser($request, ProductSku::ALLOWED_INCLUDES);
 
         return array_filter([
-            'type' => 'product-variants',
+            'type' => 'product-sku',
             'id' => $this->id,
             'attributes' => [
-                'name' => $this->name,
+                'sku' => $this->sku,
+                'price' => $this->price,
+                'stock' => $this->stock,
                 'createdAt' => $this->created_at,
                 'updatedAt' => $this->updated_at,
             ],
@@ -37,13 +39,8 @@ class ProductVariantResource extends JsonResource
                     ]
                 ],
             ]),
-            'includes' => array_filter([
-                'product' => $includes->has('product') && $this->relationLoaded('product') ?
-                    new ProductResource($this->product) :
-                    null,
-            ]),
             'links' => [
-                'self' => route('product-variants.show', $this->id)
+                'self' => route('product-sku.show', $this->id)
             ]
         ]);
     }

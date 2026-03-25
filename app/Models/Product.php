@@ -14,7 +14,11 @@ class Product extends Model
     public const ALLOWED_INCLUDES = [
         'images',
         'category',
-        'mainImage'
+        'mainImage',
+        'variants',
+        'variantValues',
+        'skus',
+        'skuValues'
     ];
 
     protected $fillable = [
@@ -23,6 +27,11 @@ class Product extends Model
         'slug',
         'description'
     ];
+
+    // public function getRouteKeyName()
+    // {
+    //     return 'slug';
+    // }
 
     public function category()
     {
@@ -34,18 +43,6 @@ class Product extends Model
         return $this->hasMany(ProductVariant::class);
     }
 
-    public function attributes()
-    {
-        return $this->hasManyThrough(
-            ProductAttribute::class,
-            ProductVariant::class,
-            'product_id',  // Foreign key on variants
-            'variant_id', // Foreign key on attributes
-            'id',          // Local key on product
-            'id'     // Local key on variants
-        );
-    }
-
     public function images()
     {
         return $this->morphMany(Image::class, 'imageable');
@@ -55,6 +52,35 @@ class Product extends Model
     {
         return $this->morphOne(Image::class, 'imageable')
             ->where('is_main', true);
+    }
+
+    public function variantValues()
+    {
+        return $this->hasManyThrough(
+            ProductVariantValue::class,
+            ProductVariant::class,
+            'product_id',  // Foreign key on variants
+            'variant_id', // Foreign key on attributes
+            'id',          // Local key on product
+            'id'     // Local key on variants
+        );
+    }
+
+    public function skus()
+    {
+        return $this->hasMany(ProductSku::class);
+    }
+
+    public function skuValues()
+    {
+        return $this->hasManyThrough(
+            SkuVariantValue::class,
+            ProductSku::class,
+            'product_id',
+            'sku_id',
+            'id',
+            'id'
+        );
     }
 
     public function scopeFilter(Builder $builder, QueryFilter $filters)

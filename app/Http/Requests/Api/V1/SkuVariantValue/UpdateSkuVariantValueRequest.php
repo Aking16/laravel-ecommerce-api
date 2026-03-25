@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Api\V1\Payment;
+namespace App\Http\Requests\Api\V1\SkuVariantValue;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePaymentRequest extends FormRequest
+class UpdateSkuVariantValueRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
     }
 
     /**
@@ -22,7 +22,7 @@ class UpdatePaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => 'sometimes|in:pending,paid,failed',
+            //
         ];
     }
 }

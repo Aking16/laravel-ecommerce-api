@@ -20,7 +20,7 @@ class ProductController extends ApiController
      */
     public function index(ProductFilter $filters)
     {
-        $products = Product::withMax('attributes', 'price')
+        $products = Product::withMax('skus', 'price')
             ->filter($filters)
             ->get();
 
@@ -41,10 +41,10 @@ class ProductController extends ApiController
      */
     public function show(Product $product, ProductFilter $filters)
     {
-
-        $product = $product::withMax('attributes', 'price')
+        $product = $product::withMax('skus', 'price')
             ->filter($filters)
-            ->findOrFail($product->id);
+            ->where('slug', $product->slug)
+            ->firstOrFail();
 
         return new ProductResource($product);
     }

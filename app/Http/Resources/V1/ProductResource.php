@@ -24,7 +24,8 @@ class ProductResource extends JsonResource
             'attributes' => [
                 'name' => $this->name,
                 'description' => $this->description,
-                'highestPrice' => $this->attributes_max_price,
+                'slug' => $this->slug,
+                'highestPrice' => $this->skus_max_price,
                 'createdAt' => $this->created_at,
                 'updatedAt' => $this->updated_at,
             ],
@@ -45,10 +46,37 @@ class ProductResource extends JsonResource
                         'self' => route('category.show', $this->category_id)
                     ]
                 ],
+                'mainImage' => $this->mainImage ? [
+                    'data' => [
+                        'type' => 'image',
+                        'id' => $this->mainImage->id
+                    ],
+                    'links' => [
+                        'self' => route('image.show', $this->mainImage->id)
+                    ]
+                ] : null,
                 'images' => $this->images->isNotEmpty() ? [
                     'data' => $this->images->map(fn($image) => [
                         'type' => 'image',
                         'id' => $image->id,
+                    ])
+                ] : null,
+                'variants' => $this->variants->isNotEmpty() ? [
+                    'data' => $this->variants->map(fn($variant) => [
+                        'type' => 'variant',
+                        'id' => $variant->id,
+                    ])
+                ] : null,
+                'variantValues' => $this->variantValues->isNotEmpty() ? [
+                    'data' => $this->variantValues->map(fn($variantValue) => [
+                        'type' => 'variantValue',
+                        'id' => $variantValue->id,
+                    ])
+                ] : null,
+                'skus' => $this->skus->isNotEmpty() ? [
+                    'data' => $this->skus->map(fn($sku) => [
+                        'type' => 'product-sku',
+                        'id' => $sku->id,
                     ])
                 ] : null,
             ]),
@@ -61,6 +89,18 @@ class ProductResource extends JsonResource
                     : null,
                 'images' => $includes->has('images') && $this->relationLoaded('images')
                     ? ImageResource::collection($this->images)
+                    : null,
+                'variants' => $includes->has('variants') && $this->relationLoaded('variants')
+                    ? ProductVariantResource::collection($this->variants)
+                    : null,
+                'variantValues' => $includes->has('variantValues') && $this->relationLoaded('variantValues')
+                    ? ProductVariantValueResource::collection($this->variantValues)
+                    : null,
+                'skus' => $includes->has('skus') && $this->relationLoaded('skus')
+                    ? ProductSkuResource::collection($this->skus)
+                    : null,
+                'skuValues' => $includes->has('skuValues') && $this->relationLoaded('skuValues')
+                    ? SkuVariantValueResource::collection($this->skuValues)
                     : null,
             ]),
             'links' => [
