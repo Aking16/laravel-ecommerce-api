@@ -5,9 +5,9 @@ namespace App\Http\Resources\V1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Support\IncludeParser;
-use App\Models\Category;
+use App\Models\SubCategory;
 
-class CategoryResource extends JsonResource
+class SubCategoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +16,10 @@ class CategoryResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $includes = new IncludeParser($request, Category::ALLOWED_INCLUDES);
+        $includes = new IncludeParser($request, SubCategory::ALLOWED_INCLUDES);
 
         return array_filter([
-            'type' => 'category',
+            'type' => 'sub-category',
             'id' => $this->id,
             'attributes' => [
                 'name' => $this->name,
@@ -38,23 +38,23 @@ class CategoryResource extends JsonResource
                         'self' => route('image.show', $this->image)
                     ]
                 ] : null,
-                'subCategories' => $this->subCategories->isNotEmpty() ? [
-                    'data' => $this->subCategories->map(fn($subCategory) => [
-                        'type' => 'sub-category',
-                        'id' => $subCategory->id,
+                'products' => $this->products->isNotEmpty() ? [
+                    'data' => $this->products->map(fn($product) => [
+                        'type' => 'product',
+                        'id' => $product->id,
                     ])
                 ] : null,
             ]),
             'includes' => array_filter([
-                'subCategories' => $includes->has('subCategories') && $this->relationLoaded('subCategories')
-                    ? SubCategoryResource::collection($this->subCategories)
+                'products' => $includes->has('products') && $this->relationLoaded('products')
+                    ? ProductResource::collection($this->products)
                     : null,
                 'image' => $includes->has('image') && $this->relationLoaded('image')
                     ? new ImageResource($this->image)
                     : null,
             ]),
             'links' => [
-                'self' => route('category.show', ($this->id))
+                'self' => route('sub-category.show', ($this->id))
             ]
         ]);
     }

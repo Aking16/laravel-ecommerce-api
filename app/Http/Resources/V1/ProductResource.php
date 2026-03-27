@@ -37,13 +37,13 @@ class ProductResource extends JsonResource
                 ] : []
             ),
             'relationships' => array_filter([
-                'category' => [
+                'subCategory' => [
                     'data' => [
-                        'type' => 'category',
-                        'id' => $this->category_id
+                        'type' => 'sub-category',
+                        'id' => $this->sub_category_id
                     ],
                     'links' => [
-                        'self' => route('category.show', $this->category_id)
+                        'self' => route('category.show', $this->sub_category_id)
                     ]
                 ],
                 'mainImage' => $this->mainImage ? [
@@ -81,8 +81,8 @@ class ProductResource extends JsonResource
                 ] : null,
             ]),
             'includes' => array_filter([
-                'category' => $includes->has('category') && $this->relationLoaded('category')
-                    ? new CategoryResource($this->category)
+                'subCategory' => $includes->has('subCategory') && $this->relationLoaded('subCategory')
+                    ? new SubCategoryResource($this->subCategory)
                     : null,
                 'mainImage' => $includes->has('mainImage') && $this->relationLoaded('mainImage')
                     ? new ImageResource($this->mainImage)

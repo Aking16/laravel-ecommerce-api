@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\ApiAuthController;
 use App\Http\Controllers\Api\V1\ProductVariantValueController;
 use App\Http\Controllers\Api\V1\CategoryController;
+use App\Http\Controllers\Api\V1\SubCategoryController;
 use App\Http\Controllers\Api\V1\ImageController;
 use App\Http\Controllers\Api\V1\ProductController;
 use App\Http\Controllers\Api\V1\CartController;
@@ -25,6 +26,7 @@ Route::prefix('v1')->group(function () {
     Route::apiResource('sku-variant-value', SkuVariantValueController::class)->only(['index', 'show']);
 
     Route::apiResource('category', CategoryController::class)->only(['index', 'show']);
+    Route::apiResource('sub-category', SubCategoryController::class)->only(['index', 'show']);
 
     Route::apiResource('image', ImageController::class)->only(['index', 'show']);
 });
@@ -33,6 +35,7 @@ Route::prefix('v1')->middleware(['auth:sanctum', 'throttle:api'])->group(functio
     Route::post('logout', [ApiAuthController::class, 'logout']);
 
     Route::apiResource('category', CategoryController::class)->except(['index', 'show']);
+    Route::apiResource('sub-category', SubCategoryController::class)->except(['index', 'show']);
 
     Route::apiResource('image', ImageController::class)->except(['index', 'show']);
 

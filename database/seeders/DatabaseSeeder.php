@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Category;
+use App\Models\SubCategory;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\ProductVariantValue;
@@ -15,7 +16,6 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // ساخت یوزر تست
         User::firstOrCreate(
             ['email' => 'test@gmail.com'],
             [
@@ -26,42 +26,46 @@ class DatabaseSeeder extends Seeder
         );
 
         Category::factory(5)->create()->each(function ($category) {
-            $products = Product::factory(3)->create([
+            SubCategory::factory(3)->create([
                 'category_id' => $category->id
-            ]);
+            ])->each(function ($subCategory) {
+                $products = Product::factory(2)->create([
+                    'sub_category_id' => $subCategory->id
+                ]);
 
-            foreach ($products as $product) {
-                $variants = ProductVariant::factory()
-                    ->count(2)
-                    ->create([
+                foreach ($products as $product) {
+                    $variants = ProductVariant::factory()
+                        ->count(2)
+                        ->create([
+                            'product_id' => $product->id
+                        ]);
+
+                    $variantValues = collect();
+
+                    foreach ($variants as $variant) {
+                        $values = ProductVariantValue::factory()
+                            ->count(3)
+                            ->create([
+                                'variant_id' => $variant->id
+                            ]);
+
+                        $variantValues[$variant->id] = $values;
+                    }
+
+                    $skus = ProductSku::factory(4)->create([
                         'product_id' => $product->id
                     ]);
 
-                $variantValues = collect();
-
-                foreach ($variants as $variant) {
-                    $values = ProductVariantValue::factory()
-                        ->count(3)
-                        ->create([
-                            'variant_id' => $variant->id
-                        ]);
-
-                    $variantValues[$variant->id] = $values;
-                }
-
-                $skus = ProductSku::factory(4)->create([
-                    'product_id' => $product->id
-                ]);
-
-                foreach ($skus as $sku) {
-                    foreach ($variants as $variant) {
-                        SkuVariantValue::create([
-                            'sku_id' => $sku->id,
-                            'variant_value_id' => $variantValues[$variant->id]->random()->id
-                        ]);
+                    foreach ($skus as $sku) {
+                        foreach ($variants as $variant) {
+                            SkuVariantValue::create([
+                                'sku_id' => $sku->id,
+                                'variant_value_id' => $variantValues[$variant->id]->random()->id
+                            ]);
+                        }
                     }
                 }
-            }
+            });
         });
     }
 }

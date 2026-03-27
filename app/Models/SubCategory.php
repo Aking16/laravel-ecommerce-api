@@ -7,24 +7,32 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Category extends Model
+class SubCategory extends Model
 {
+    /** @use HasFactory<\Database\Factories\SubCategoryFactory> */
     use HasFactory;
 
     public const ALLOWED_INCLUDES = [
-        'subCategories',
+        'products',
         'image',
+        'category',
     ];
 
     protected $fillable = [
         'name',
         'slug',
-        'description'
+        'description',
+        'category_id'
     ];
 
-    public function subCategories()
+    public function category()
     {
-        return $this->hasMany(SubCategory::class);
+        return $this->belongsTo(Category::class);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 
     public function image()

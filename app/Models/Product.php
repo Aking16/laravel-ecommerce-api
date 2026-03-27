@@ -13,7 +13,7 @@ class Product extends Model
 
     public const ALLOWED_INCLUDES = [
         'images',
-        'category',
+        'subCategory',
         'mainImage',
         'variants',
         'variantValues',
@@ -33,9 +33,9 @@ class Product extends Model
         return 'slug';
     }
 
-    public function category()
+    public function subCategory()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(SubCategory::class);
     }
 
     public function variants()
