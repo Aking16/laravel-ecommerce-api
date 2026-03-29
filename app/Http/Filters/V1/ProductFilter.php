@@ -10,6 +10,8 @@ class ProductFilter extends QueryFilter
     'id',
     'name',
     'description',
+    'subCategory',
+    "sub_category_id",
     'metaTitle' => 'meta_title',
     'metaDescription' => 'meta_description',
     'metaKeywords' => 'meta_keywords',
@@ -31,9 +33,9 @@ class ProductFilter extends QueryFilter
     return $this->builder->where('description', 'like', $likeStr);
   }
 
-  public function category($value)
+  public function subCategory($value)
   {
-    return $this->builder->where('category_id', $value);
+    return $this->builder->where('sub_category_id', $value);
   }
 
   public function metaTitle($value)
