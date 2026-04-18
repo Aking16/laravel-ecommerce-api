@@ -10,6 +10,7 @@ class ProductFilter extends QueryFilter
     'id',
     'name',
     'description',
+    'price',
     'subCategory',
     "sub_category_id",
     'metaTitle' => 'meta_title',
@@ -33,9 +34,61 @@ class ProductFilter extends QueryFilter
     return $this->builder->where('description', 'like', $likeStr);
   }
 
+  public function price($value)
+  {
+
+    // Range filter: price=100,500
+    if (str_contains($value, ',')) {
+      [$min, $max] = explode(',', $value);
+
+      if ($min === 'all' && $max === 'all') return $this->builder;
+
+      return $this->builder->whereHas('skus', function ($q) use ($min, $max) {
+        if ($min !== '') {
+          $q->where('price', '>=', $min);
+        }
+
+        if ($max !== '') {
+          $q->where('price', '<=', $max);
+        }
+      });
+    }
+
+    // Operator filter: gt100, lte200 etc
+    if (preg_match('/^(gt|lt|gte|lte|eq|e)(\d+(\.\d+)?)/i', $value, $matches)) {
+
+      $operatorMap = [
+        'gt' => '>',
+        'lt' => '<',
+        'gte' => '>=',
+        'lte' => '<=',
+        'eq' => '=',
+        'e'  => '='
+      ];
+
+      $operator = $operatorMap[strtolower($matches[1])];
+      $amount = $matches[2];
+
+      return $this->builder->whereHas('skus', function ($q) use ($operator, $amount) {
+        $q->where('price', $operator, $amount);
+      });
+    }
+
+    return $this->builder;
+  }
+
+
   public function subCategory($value)
   {
-    return $this->builder->where('sub_category_id', $value);
+    // If the frontend sends "0" or ["0"], select all → no filtering
+    if ($value == 0 || $value === "0" || (is_array($value) && in_array("0", $value))) {
+      return $this->builder;
+    }
+
+    // Convert "2,3,5" → ["2", "3", "5"]
+    $ids = is_array($value) ? $value : explode(',', $value);
+
+    return $this->builder->whereIn('sub_category_id', $ids);
   }
 
   public function metaTitle($value)
