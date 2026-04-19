@@ -28,6 +28,11 @@ class ProductSku extends Model
         return $this->belongsTo(Product::class, "product_id");
     }
 
+    public function variantValues()
+    {
+        return $this->belongsToMany(ProductVariantValue::class, 'sku_variant_values', 'sku_id', 'variant_value_id');
+    }
+
     public function scopeFilter(Builder $builder, QueryFilter $filters)
     {
         return $filters->apply($builder);

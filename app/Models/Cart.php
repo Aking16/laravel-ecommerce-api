@@ -11,6 +11,10 @@ class Cart extends Model
 {
     use HasFactory;
 
+    public const ALLOWED_INCLUDES = [
+        'items'
+    ];
+
     protected $fillable = [
         'user_id'
     ];
@@ -23,6 +27,11 @@ class Cart extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function order()
+    {
+        return $this->hasOne(Order::class);
     }
 
     public function scopeFilter(Builder $builder, QueryFilter $filters)

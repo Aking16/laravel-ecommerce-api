@@ -48,6 +48,12 @@ Route::prefix('v1')->middleware(['auth:sanctum', 'throttle:api'])->group(functio
     Route::apiResource('cart-items', CartItemsController::class);
     Route::apiResource('cart', CartController::class);
 
+    Route::controller(CartController::class)->group(function () {
+        Route::get('cart/current', 'getCurrentCart')->name('cart.current');
+        Route::delete('cart/{cart}/clear', 'clearCart')->name('cart.clear');
+        Route::get('cart/{cart}/total', 'calculateTotal')->name('cart.total');
+    });
+
     Route::apiResource('payments', PaymentsController::class);
 
     Route::get('/user', function (Request $request) {

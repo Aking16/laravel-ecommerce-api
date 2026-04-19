@@ -4,6 +4,8 @@ namespace App\Http\Resources\V1;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Support\IncludeParser;
+use App\Models\Cart;
 
 class CartResource extends JsonResource
 {
@@ -14,6 +16,8 @@ class CartResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $includes = new IncludeParser($request, Cart::ALLOWED_INCLUDES);
+
         return array_filter([
             'type' => 'carts',
             'id' => $this->id,
@@ -33,8 +37,7 @@ class CartResource extends JsonResource
             ]),
             'includes' => array_filter([
                 'items' =>
-                $this->relationLoaded('items')
-                    && request()->query('include')
+                $includes->has('items') && $this->relationLoaded('items')
                     ? CartItemsResource::collection($this->items)
                     : null,
             ]),

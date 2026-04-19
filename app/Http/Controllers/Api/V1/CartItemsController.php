@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Traits\ApiResponses;
 use App\Models\CartItem;
+use App\Models\Cart;
 use App\Http\Filters\V1\CartItemsFilter;
 use App\Http\Requests\Api\V1\CartItems\StoreCartItemsRequest;
 use App\Http\Requests\Api\V1\CartItems\UpdateCartItemsRequest;
 use App\Http\Resources\V1\CartItemsResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class CartItemsController extends ApiController
 {
@@ -20,9 +22,13 @@ class CartItemsController extends ApiController
      */
     public function index(CartItemsFilter $filters)
     {
-        return CartItemsResource::collection(
-            CartItem::filter($filters)->get()
-        );
+        $cartItems = CartItem::filter($filters)
+            ->whereHas('cart', function ($query) {
+                $query->where('user_id', Auth::id());
+            })
+            ->get();
+
+        return CartItemsResource::collection($cartItems);
     }
 
     /**
@@ -30,10 +36,36 @@ class CartItemsController extends ApiController
      */
     public function store(StoreCartItemsRequest $request)
     {
-        $item = CartItem::create($request->validated());
+        // Get or create user's active cart
+        $cart = Cart::firstOrCreate(
+            ['user_id' => Auth::id()],
+            ['user_id' => Auth::id()]
+        );
+
+        // Check if item already exists in cart
+        $existingItem = CartItem::where('cart_id', $cart->id)
+            ->where('sku_id', $request->validated('sku_id'))
+            ->first();
+
+
+        if ($existingItem) {
+            // Update quantity instead of creating duplicate
+            $existingItem->update([
+                'quantity' => $existingItem->quantity + ($request->validated('quantity') ?? 1)
+            ]);
+
+            $item = $existingItem;
+        } else {
+            // Create new cart item
+            $item = CartItem::create([
+                'cart_id' => $cart->id,
+                'sku_id' => $request->validated('sku_id'),
+                'quantity' => $request->validated('quantity') ?? 1,
+            ]);
+        }
 
         return new CartItemsResource(
-            $item->load('attribute.variant.product')
+            $item->load('sku.product')
         );
     }
 
@@ -44,8 +76,12 @@ class CartItemsController extends ApiController
     {
         Gate::authorize('view', $cartItem);
 
+        if ($cartItem->cart->user_id !== Auth::id()) {
+            return $this->error('Unauthorized', 403);
+        }
+
         return new CartItemsResource(
-            $cartItem->load('attribute.variant.product')
+            $cartItem->load('sku.product')
         );
     }
 
@@ -58,9 +94,7 @@ class CartItemsController extends ApiController
 
         $cartItem->update($request->validated());
 
-        return new CartItemsResource(
-            $cartItem->load('attribute.variant.product')
-        );
+        return new CartItemsResource($cartItem);
     }
 
     /**
@@ -70,6 +104,10 @@ class CartItemsController extends ApiController
     {
         try {
             $item = CartItem::findOrFail($id);
+
+            if ($item->cart->user_id !== Auth::id()) {
+                return $this->error('Unauthorized', 403);
+            }
 
             Gate::authorize('delete', $item);
 

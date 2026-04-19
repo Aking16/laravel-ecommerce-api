@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Models\Carts;
-use App\Models\Payment;
+use App\Models\Cart;
+use App\Models\CartItem;
 use App\Policies\CartPolicy;
-use App\Policies\PaymentPolicy;
+use App\Policies\CartItemPolicy;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -36,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
 
-        Gate::policy(Carts::class, CartPolicy::class);
-        Gate::policy(Payment::class, PaymentPolicy::class);
+        Gate::policy(Cart::class, CartPolicy::class);
+        Gate::policy(CartItem::class, CartItemPolicy::class);
     }
 }
